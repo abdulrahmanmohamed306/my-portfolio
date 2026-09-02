@@ -122,7 +122,7 @@ export default function SkillsPage() {
 
         {/* Page Title */}
         <div className="space-y-2 border-l-4 border-cyan-400 pl-4">
-          <h1 className="text-3xl font-extrabold tracking-tight">Technical & Financial Expertise</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight">Technical & Financial Skills</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
             A comprehensive breakdown of data analytics tools, accounting proficiencies, and core competencies.
           </p>
