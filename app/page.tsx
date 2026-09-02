@@ -224,7 +224,7 @@ export default function PortfolioHome() {
 
           <nav className="flex items-center gap-6 text-xs font-semibold text-slate-700 dark:text-slate-300">
             <Link href="/about" className="hover:text-cyan-600 transition">About</Link>
-            <a href="#skills" className="hover:text-cyan-600 transition">Skills</a>
+            <Link href="/skills" className="hover:text-cyan-600 transition">Skills</Link>
             <a href="#projects" className="hover:text-cyan-600 transition">Projects</a>
             <a href="#contact" className="hover:text-cyan-600 transition">Contact</a>
             
