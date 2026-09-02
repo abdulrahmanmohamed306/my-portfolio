@@ -260,7 +260,7 @@ export default function PortfolioHome() {
             </h1>
 
             <p className={`text-sm sm:text-base leading-relaxed font-normal ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Experienced Senior General Accountant with 7+ years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools to extract actionable business insights.
+              Experienced Senior General Accountant with +7 years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools to extract actionable business insights.
             </p>
 
             <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2 font-medium text-xs">
