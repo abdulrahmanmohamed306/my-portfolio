@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { 
   FileText, 
   Mail, 
@@ -240,77 +241,84 @@ export default function PortfolioHome() {
 
       <main className="max-w-5xl mx-auto px-6 py-12 space-y-20 relative z-10">
 
-        {/* Hero Section */}
-        <section className="text-center space-y-6 pt-4">
+        {/* Hero Section (Updated with Personal Photo) */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pt-4">
+          
+          <div className="space-y-6 text-center md:text-left">
+            <div className="inline-block">
+              <span className={`px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-inner ${
+                isDark 
+                  ? 'bg-cyan-950/80 border border-cyan-400/40 text-cyan-300' 
+                  : 'bg-cyan-100/80 border border-cyan-300 text-cyan-800'
+              }`}>
+                SENIOR GENERAL ACCOUNTANT & FINANCIAL DATA ANALYST
+              </span>
+            </div>
+
+            <h1 className={`text-4xl sm:text-5xl font-black tracking-tight ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+              Abdulrahman Mohamed
+            </h1>
+
+            <p className={`text-sm sm:text-base leading-relaxed font-normal ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+              Experienced Senior General Accountant with 7+ years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools to extract actionable business insights.
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2 font-medium text-xs">
+              <a 
+                href="/Abdulrahman_Mohamed_CV.pdf" 
+                download
+                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition"
+              >
+                <FileText className="w-4 h-4" />
+                <span>Download Resume (PDF)</span>
+              </a>
+
+              <a 
+                href="mailto:abdulrahmanmohamed306@gmail.com"
+                className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+              >
+                <Mail className="w-4 h-4" />
+                <span>Contact Me</span>
+              </a>
+
+              <a 
+                href="https://linkedin.com/in/abdulrahman-mohammed-395556148" 
+                target="_blank" 
+                rel="noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+              >
+                <Share2 className="w-4 h-4" />
+                <span>LinkedIn</span>
+              </a>
+
+              <a 
+                href="https://github.com/abdulrahmanmohamed306" 
+                target="_blank" 
+                rel="noreferrer"
+                className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
+              >
+                <Globe className="w-4 h-4" />
+                <span>GitHub</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Personal Photo Element */}
           <div className="flex justify-center">
             <div className="relative group">
               <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-sky-500 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition duration-500" />
-              <div className="relative w-36 h-36 rounded-full bg-white dark:bg-slate-950 border-2 border-cyan-400 p-2 flex items-center justify-center overflow-hidden shadow-2xl">
-                <img 
-                  src="/logo.svg" 
-                  alt="Abdulrahman Logo" 
-                  className="w-full h-full object-contain"
+              <div className="relative w-48 h-48 md:w-60 md:h-60 rounded-full bg-white dark:bg-slate-950 border-4 border-cyan-400 overflow-hidden shadow-2xl">
+                <Image 
+                  src="/my.photo.jpg" 
+                  alt="Abdulrahman Mohamed" 
+                  fill
+                  priority
+                  className="object-cover object-center"
                 />
               </div>
             </div>
           </div>
 
-          <div className="inline-block">
-            <span className={`px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-inner ${
-              isDark 
-                ? 'bg-cyan-950/80 border border-cyan-400/40 text-cyan-300' 
-                : 'bg-cyan-100/80 border border-cyan-300 text-cyan-800'
-            }`}>
-              SENIOR GENERAL ACCOUNTANT & FINANCIAL DATA ANALYST
-            </span>
-          </div>
-
-          <h1 className={`text-4xl sm:text-6xl font-black tracking-tight ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
-            Abdulrahman Mohamed
-          </h1>
-
-          <p className={`text-sm sm:text-base max-w-2xl mx-auto leading-relaxed font-normal ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-            Experienced Senior General Accountant with 7+ years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools to extract actionable business insights.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2 font-medium text-xs">
-            <a 
-              href="/Abdulrahman_Mohamed_CV.pdf" 
-              download
-              className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition"
-            >
-              <FileText className="w-4 h-4" />
-              <span>Download Resume (PDF)</span>
-            </a>
-
-            <a 
-              href="mailto:abdulrahmanmohamed306@gmail.com"
-              className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-            >
-              <Mail className="w-4 h-4" />
-              <span>Contact Me</span>
-            </a>
-
-            <a 
-              href="https://linkedin.com/in/abdulrahman-mohammed-395556148" 
-              target="_blank" 
-              rel="noreferrer"
-              className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-            >
-              <Share2 className="w-4 h-4" />
-              <span>LinkedIn</span>
-            </a>
-
-            <a 
-              href="https://github.com/abdulrahmanmohamed306" 
-              target="_blank" 
-              rel="noreferrer"
-              className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-            >
-              <Globe className="w-4 h-4" />
-              <span>GitHub</span>
-            </a>
-          </div>
         </section>
 
         {/* Skills Section */}
