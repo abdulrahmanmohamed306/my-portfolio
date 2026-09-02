@@ -9,36 +9,6 @@ export default function SkillsPage() {
 
   const skillsData = [
     {
-      category: "Financial Accounting & Reporting",
-      icon: <Calculator className="w-5 h-5 text-emerald-500" />,
-      skills: [
-        { 
-          name: "Financial Statements Preparation", 
-          rating: 5, 
-          percentage: "95%", 
-          comment: "Extensive expertise in preparing Income Statement, Balance Sheet, and Cash Flow statements in compliance with standards." 
-        },
-        { 
-          name: "General Ledger & Reconciliations", 
-          rating: 4.5, 
-          percentage: "90%", 
-          comment: "Managing general ledger operations accurately and handling regular bank reconciliations and period-end closings." 
-        },
-        { 
-          name: "Accounts Payable & Receivable", 
-          rating: 4.5, 
-          percentage: "90%", 
-          comment: "Managing full-cycle AP/AR operations, monitoring collections, and tracking vendor payments efficiently." 
-        },
-        { 
-          name: "Financial Auditing & Internal Control", 
-          rating: 4, 
-          percentage: "85%", 
-          comment: "Executing financial audits, strengthening internal controls, and ensuring accuracy across financial transactions." 
-        }
-      ]
-    },
-    {
       category: "Data Analytics & Business Intelligence",
       icon: <BarChart3 className="w-5 h-5 text-cyan-500" />,
       skills: [
@@ -65,6 +35,36 @@ export default function SkillsPage() {
           rating: 5, 
           percentage: "95%", 
           comment: "Expert in Power Query, Pivot Tables, complex formulas, and financial modeling for corporate data structuring." 
+        }
+      ]
+    },
+    {
+      category: "Financial Accounting & Reporting",
+      icon: <Calculator className="w-5 h-5 text-emerald-500" />,
+      skills: [
+        { 
+          name: "Financial Statements Preparation", 
+          rating: 5, 
+          percentage: "95%", 
+          comment: "Extensive expertise in preparing Income Statement, Balance Sheet, and Cash Flow statements in compliance with standards." 
+        },
+        { 
+          name: "General Ledger & Reconciliations", 
+          rating: 4.5, 
+          percentage: "90%", 
+          comment: "Managing general ledger operations accurately and handling regular bank reconciliations and period-end closings." 
+        },
+        { 
+          name: "Accounts Payable & Receivable", 
+          rating: 4.5, 
+          percentage: "90%", 
+          comment: "Managing full-cycle AP/AR operations, monitoring collections, and tracking vendor payments efficiently." 
+        },
+        { 
+          name: "Financial Auditing & Internal Control", 
+          rating: 4, 
+          percentage: "85%", 
+          comment: "Executing financial audits, strengthening internal controls, and ensuring accuracy across financial transactions." 
         }
       ]
     },
@@ -124,7 +124,7 @@ export default function SkillsPage() {
         <div className="space-y-2 border-l-4 border-cyan-400 pl-4">
           <h1 className="text-3xl font-extrabold tracking-tight">Technical & Financial Expertise</h1>
           <p className="text-sm text-slate-500 dark:text-slate-400">
-            A comprehensive breakdown of accounting proficiencies, data analytics tools, and core competencies.
+            A comprehensive breakdown of data analytics tools, accounting proficiencies, and core competencies.
           </p>
         </div>
 
@@ -153,7 +153,7 @@ export default function SkillsPage() {
                         <span className="font-bold text-sm">{skill.name}</span>
                       </div>
                       
-                      {/* Rating Stars & Percentage (Visible/Enhanced on Hover) */}
+                      {/* Rating Stars & Percentage */}
                       <div className="flex items-center gap-3">
                         <div className="flex items-center gap-1">
                           {[...Array(5)].map((_, i) => (
