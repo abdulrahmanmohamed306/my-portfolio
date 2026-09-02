@@ -191,7 +191,8 @@ function TiltCard({ children, className = '', isDark }: { children: React.ReactN
 }
 
 export default function AboutPage() {
-  const [isDark, setIsDark] = useState(true);
+  // تم ضبط الحالة الافتراضية هنا لتكون false (يعني Light Mode افتراضياً)
+  const [isDark, setIsDark] = useState(false);
 
   return (
     <div className={`min-h-screen font-sans relative overflow-hidden transition-colors duration-300 scroll-smooth ${
@@ -325,7 +326,7 @@ export default function AboutPage() {
               <div className={`p-4 rounded-xl border shadow-sm text-center h-full ${
                 isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
               }`}>
-                <p className={`text-2xl font-black ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>+7</p>
+                <p className={`text-2xl font-black ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>7+</p>
                 <p className={`text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Years Experience</p>
               </div>
             </TiltCard>
