@@ -312,7 +312,7 @@ export default function PortfolioHome() {
 
             <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-cyan-500/30 shadow-xl relative group">
               <img 
-                src="/download1.jfif" 
+                src="/download1.png" 
                 alt="Data Visualization 1" 
                 className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               />
@@ -402,7 +402,7 @@ export default function PortfolioHome() {
 
             <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-sky-500/30 shadow-xl relative group">
               <img 
-                src="/download2.jfif" 
+                src="/download2.png" 
                 alt="Data Visualization 2" 
                 className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               />
@@ -496,7 +496,7 @@ export default function PortfolioHome() {
 
             <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-emerald-500/30 shadow-xl relative group">
               <img 
-                src="/download3.jfif" 
+                src="/download3.png" 
                 alt="Data Visualization 3" 
                 className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               />
