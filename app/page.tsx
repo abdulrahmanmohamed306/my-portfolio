@@ -153,12 +153,13 @@ function InteractiveParticlesCanvas({ isDark }: { isDark: boolean }) {
   );
 }
 
-const cardPageVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
+const sectionVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.92, y: 50 },
   visible: { 
     opacity: 1, 
+    scale: 1, 
     y: 0,
-    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const }
+    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }
   }
 };
 
@@ -188,7 +189,7 @@ export default function PortfolioHome() {
         isDark ? 'bg-cyan-600/15' : 'bg-cyan-400/20'
       }`} />
 
-      {/* Floating Header - تم رفع الـ z-index وضبط الـ pointer-events */}
+      {/* Floating Header */}
       <header className="fixed top-6 left-0 right-0 z-50 px-4 max-w-6xl mx-auto pointer-events-auto">
         <div className={`backdrop-blur-md rounded-2xl px-8 py-4 flex items-center justify-between border shadow-2xl transition-all ${
           isDark ? 'bg-slate-900/95 border-slate-800 text-slate-100' : 'bg-white/95 border-slate-200 text-slate-900'
@@ -217,22 +218,20 @@ export default function PortfolioHome() {
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="max-w-6xl mx-auto px-6 pt-32 pb-16 space-y-10 relative z-10">
+      {/* Main Container with Full-Screen Sections (Snap Scroll) */}
+      <main className="relative z-10 w-full">
 
-        {/* ==================== CARD 1: HERO / INTRO ==================== */}
-        <motion.section 
-          id="hero-card" 
-          className="flex items-center justify-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={cardPageVariants}
-        >
-          <div className={`relative w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col md:flex-row items-center gap-10 ${
-            isDark ? 'bg-slate-900/90 border-slate-800 shadow-cyan-950/20' : 'bg-white border-slate-200 shadow-slate-200'
-          }`}>
-            
+        {/* ==================== SECTION 1: HERO / INTRO ==================== */}
+        <section id="hero-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+          <motion.div 
+            className={`relative w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col md:flex-row items-center gap-10 ${
+              isDark ? 'bg-slate-900/90 border-slate-800 shadow-cyan-950/20' : 'bg-white border-slate-200 shadow-slate-200'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
             <div className="relative z-20 md:w-7/12 space-y-5 text-center md:text-left">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-cyan-100/90 text-cyan-800 dark:bg-cyan-950/90 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800">
                 <Sparkles className="w-4 h-4" />
@@ -272,8 +271,7 @@ export default function PortfolioHome() {
               </div>
             </div>
 
-            {/* Hero Section Image Frame */}
-            <div className="relative md:w-5/12 h-80 md:h-[420px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
+            <div className="relative md:w-5/12 h-72 md:h-[380px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
               <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-sky-500 blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
               <img 
                 src="/hero section.png" 
@@ -285,25 +283,21 @@ export default function PortfolioHome() {
                 }}
               />
             </div>
+          </motion.div>
+        </section>
 
-          </div>
-        </motion.section>
-
-
-        {/* ==================== CARD 2: SKILLS REVEAL ==================== */}
-        <motion.section 
-          id="skills-card" 
-          className="flex items-center justify-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={cardPageVariants}
-        >
-          <div className={`w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
-            isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-          }`}>
-            
-            <div className="relative md:w-5/12 h-72 md:h-[380px] w-full rounded-3xl overflow-hidden shadow-2xl border border-cyan-500/30 flex-shrink-0 group">
+        {/* ==================== SECTION 2: SKILLS ==================== */}
+        <section id="skills-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+          <motion.div 
+            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+              isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
+            <div className="relative md:w-5/12 h-64 md:h-[350px] w-full rounded-3xl overflow-hidden shadow-2xl border border-cyan-500/30 flex-shrink-0 group">
               <img 
                 src="/workspace.jpg" 
                 alt="Abdulrahman Workspace & Skills" 
@@ -346,24 +340,20 @@ export default function PortfolioHome() {
                 </Link>
               </div>
             </div>
+          </motion.div>
+        </section>
 
-          </div>
-        </motion.section>
-
-
-        {/* ==================== CARD 3: GENERAL PROJECTS OVERVIEW ==================== */}
-        <motion.section 
-          id="projects-card" 
-          className="flex items-center justify-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={cardPageVariants}
-        >
-          <div className={`w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
-            isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-          }`}>
-            
+        {/* ==================== SECTION 3: PROJECTS ==================== */}
+        <section id="projects-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+          <motion.div 
+            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+              isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
             <div className="space-y-6 text-center md:text-left flex-1">
               <span className="text-xs font-bold text-cyan-500 uppercase tracking-widest flex items-center justify-center md:justify-start gap-2">
                 <FolderKanban className="w-4 h-4" />
@@ -399,7 +389,7 @@ export default function PortfolioHome() {
               </div>
             </div>
 
-            <div className="relative md:w-5/12 h-80 md:h-[380px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
+            <div className="relative md:w-5/12 h-72 md:h-[350px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
               <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-sky-500 blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
               <img 
                 src="/Firefly_Gemini Flash_data analysis  886741.png" 
@@ -411,25 +401,22 @@ export default function PortfolioHome() {
                 }}
               />
             </div>
+          </motion.div>
+        </section>
 
-          </div>
-        </motion.section>
-
-
-        {/* ==================== CARD 4: CONTACT ==================== */}
-        <motion.section 
-          id="contact-card" 
-          className="flex items-center justify-center"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={cardPageVariants}
-        >
-          <div className={`w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
-            isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-          }`}>
+        {/* ==================== SECTION 4: CONTACT ==================== */}
+        <section id="contact-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+          <motion.div 
+            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+              isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
             <div className="space-y-6 text-center md:text-left flex-1">
-              <div className="w-28 h-28 rounded-2xl bg-slate-950 border-2 border-cyan-400/80 overflow-hidden mx-auto md:mx-0 shadow-lg p-3 flex items-center justify-center">
+              <div className="w-24 h-24 rounded-2xl bg-slate-950 border-2 border-cyan-400/80 overflow-hidden mx-auto md:mx-0 shadow-lg p-3 flex items-center justify-center">
                 <img 
                   src="/logo.svg" 
                   alt="Abdulrahman Logo" 
@@ -454,7 +441,7 @@ export default function PortfolioHome() {
               </div>
             </div>
 
-            <div className="w-full md:w-1/2 p-8 rounded-2xl bg-slate-950 border border-slate-800 text-slate-100 space-y-5 shadow-xl">
+            <div className="w-full md:w-1/2 p-6 rounded-2xl bg-slate-950 border border-slate-800 text-slate-100 space-y-4 shadow-xl">
               <h3 className="font-bold text-base text-cyan-400 flex items-center gap-2">
                 <Send className="w-5 h-5" />
                 <span>Send Direct Message</span>
@@ -465,14 +452,14 @@ export default function PortfolioHome() {
                   Thank you! Your message has been sent successfully.
                 </div>
               ) : (
-                <form onSubmit={handleSendEmail} className="space-y-4 text-xs">
+                <form onSubmit={handleSendEmail} className="space-y-3 text-xs">
                   <input 
                     type="text" 
                     placeholder="Your Name" 
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
                   />
                   <input 
                     type="email" 
@@ -480,19 +467,19 @@ export default function PortfolioHome() {
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
                   />
                   <textarea 
                     placeholder="Your Message..." 
-                    rows={4} 
+                    rows={3} 
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
+                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
                   />
                   <button 
                     type="submit" 
-                    className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 cursor-pointer"
+                    className="w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 cursor-pointer"
                   >
                     <span>Send Message</span>
                     <Send className="w-4 h-4" />
@@ -500,14 +487,10 @@ export default function PortfolioHome() {
                 </form>
               )}
             </div>
-          </div>
-        </motion.section>
+          </motion.div>
+        </section>
 
       </main>
-
-      <footer className="py-6 text-center text-xs text-slate-500 font-medium border-t border-slate-800">
-        © 2026 Abdulrahman Mohamed. All rights reserved.
-      </footer>
     </div>
   );
 }
