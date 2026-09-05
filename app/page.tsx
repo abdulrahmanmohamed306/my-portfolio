@@ -17,7 +17,8 @@ import {
   Sparkles,
   Layers,
   FolderKanban,
-  PieChart
+  PieChart,
+  Quote
 } from "lucide-react";
 
 // Interactive Gentle Particles Background Component
@@ -218,7 +219,7 @@ export default function PortfolioHome() {
         </div>
       </header>
 
-      {/* Main Container with Full-Screen Sections (Snap Scroll) */}
+      {/* Main Container with Full-Screen Sections */}
       <main className="relative z-10 w-full">
 
         {/* ==================== SECTION 1: HERO / INTRO ==================== */}
@@ -286,6 +287,39 @@ export default function PortfolioHome() {
           </motion.div>
         </section>
 
+        {/* ==================== DIVIDER 1: Data Quote & Image 1 ==================== */}
+        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
+          <motion.div 
+            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
+              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
+            <div className="md:w-1/2 space-y-6 text-center md:text-left">
+              <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto md:mx-0 text-cyan-400">
+                <Quote className="w-7 h-7" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
+                "The world is full of obvious data which nobody has ever observed."
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-cyan-500 uppercase tracking-wider">
+                — Sherlock Holmes • Big Data & Hidden Insights
+              </p>
+            </div>
+
+            <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-cyan-500/30 shadow-xl relative group">
+              <img 
+                src="/download1.jfif" 
+                alt="Data Visualization 1" 
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+              />
+            </div>
+          </motion.div>
+        </section>
+
         {/* ==================== SECTION 2: SKILLS ==================== */}
         <section id="skills-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
           <motion.div 
@@ -339,6 +373,39 @@ export default function PortfolioHome() {
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ==================== DIVIDER 2: Analytics Quote & Image 2 ==================== */}
+        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
+          <motion.div 
+            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row-reverse items-center gap-10 ${
+              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
+            <div className="md:w-1/2 space-y-6 text-center md:text-left">
+              <div className="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mx-auto md:mx-0 text-sky-400">
+                <BarChart3 className="w-7 h-7" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
+                "Data is like crude oil. It’s valuable, but if unrefined it cannot really be used."
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-sky-400 uppercase tracking-wider">
+                — Clive Humby • Refining Clean Insights
+              </p>
+            </div>
+
+            <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-sky-500/30 shadow-xl relative group">
+              <img 
+                src="/download2.jfif" 
+                alt="Data Visualization 2" 
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+              />
             </div>
           </motion.div>
         </section>
@@ -399,6 +466,39 @@ export default function PortfolioHome() {
                   (e.target as HTMLImageElement).src = '/logo.svg';
                   (e.target as HTMLImageElement).className = 'relative z-10 w-3/4 h-3/4 object-contain';
                 }}
+              />
+            </div>
+          </motion.div>
+        </section>
+
+        {/* ==================== DIVIDER 3: Future Quote & Image 3 ==================== */}
+        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
+          <motion.div 
+            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
+              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
+            }`}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false, amount: 0.5 }}
+            variants={sectionVariants}
+          >
+            <div className="md:w-1/2 space-y-6 text-center md:text-left">
+              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto md:mx-0 text-emerald-400">
+                <Sparkles className="w-7 h-7" />
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
+                "The goal is to turn data into information, and information into insight."
+              </h3>
+              <p className="text-xs sm:text-sm font-semibold text-emerald-400 uppercase tracking-wider">
+                — Carly Fiorina • Strategic Decision Making
+              </p>
+            </div>
+
+            <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-emerald-500/30 shadow-xl relative group">
+              <img 
+                src="/download3.jfif" 
+                alt="Data Visualization 3" 
+                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
               />
             </div>
           </motion.div>
