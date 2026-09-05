@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { ArrowLeft, Calculator, BarChart3, Globe, CheckCircle2, Moon, Sun, Star } from 'lucide-react';
 
 export default function SkillsPage() {
-  const [isDark, setIsDark] = useState(false);
+  // تم ضبط القيمة الافتراضية هنا لتكون true (الوضع الغامق هو الأساس)
+  const [isDark, setIsDark] = useState(true);
 
   const skillsData = [
     {
@@ -104,7 +105,7 @@ export default function SkillsPage() {
         <div className="flex items-center justify-between">
           <Link 
             href="/" 
-            className={`inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-xl transition ${
+            className={`inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer ${
               isDark ? 'bg-slate-800 text-cyan-400 hover:bg-slate-700' : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
             }`}
           >
@@ -114,16 +115,17 @@ export default function SkillsPage() {
 
           <button 
             onClick={() => setIsDark(!isDark)}
-            className="p-2 rounded-full bg-slate-900 text-amber-400 hover:bg-slate-800 transition shadow-md"
+            className="p-2.5 rounded-full bg-slate-800 text-amber-400 hover:bg-slate-700 transition shadow-md cursor-pointer"
+            title="Toggle Theme"
           >
-            {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4 text-slate-200" />}
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
           </button>
         </div>
 
         {/* Page Title */}
         <div className="space-y-2 border-l-4 border-cyan-400 pl-4">
           <h1 className="text-3xl font-extrabold tracking-tight">Technical & Financial Skills</h1>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          <p className="text-sm text-slate-400">
             A comprehensive breakdown of data analytics tools, accounting proficiencies, and core competencies.
           </p>
         </div>
@@ -132,7 +134,7 @@ export default function SkillsPage() {
         <div className="space-y-8">
           {skillsData.map((section, idx) => (
             <div key={idx} className={`p-6 rounded-2xl border shadow-sm space-y-5 ${
-              isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
+              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
             }`}>
               <div className="flex items-center gap-3">
                 {section.icon}
@@ -164,18 +166,18 @@ export default function SkillsPage() {
                                   ? 'text-amber-400 fill-amber-400' 
                                   : i < skill.rating 
                                   ? 'text-amber-400 fill-amber-400/50' 
-                                  : 'text-slate-300 dark:text-slate-700'
+                                  : 'text-slate-700'
                               }`} 
                             />
                           ))}
                         </div>
-                        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-500">
+                        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400">
                           {skill.percentage}
                         </span>
                       </div>
                     </div>
 
-                    <p className="text-xs text-slate-500 dark:text-slate-400 pl-6 leading-relaxed">
+                    <p className="text-xs text-slate-400 pl-6 leading-relaxed">
                       {skill.comment}
                     </p>
                   </div>

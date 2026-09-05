@@ -2,21 +2,22 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { motion, Variants } from 'framer-motion';
 import { 
   FileText, 
   Mail, 
-  Globe, 
-  Share2, 
   Moon, 
   Sun,
-  ArrowUpRight,
-  ChevronDown,
   Phone,
-  MessageCircle,
-  Calculator,
   BarChart3,
-  CheckCircle2
+  Calculator,
+  ArrowRight,
+  User,
+  Send,
+  Sparkles,
+  Layers,
+  FolderKanban,
+  PieChart
 } from "lucide-react";
 
 // Interactive Gentle Particles Background Component
@@ -152,403 +153,359 @@ function InteractiveParticlesCanvas({ isDark }: { isDark: boolean }) {
   );
 }
 
-// 3D Tilt Card Component Wrapper
-function TiltCard({ children, className = '', isDark }: { children: React.ReactNode; className?: string; isDark: boolean }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const rotateX = -((y - centerY) / centerY) * 4;
-    const rotateY = ((x - centerX) / centerX) * 4;
-
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.01, 1.01, 1.01)`;
-  };
-
-  const handleMouseLeave = () => {
-    const card = cardRef.current;
-    if (!card) return;
-    card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-  };
-
-  return (
-    <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ transition: 'transform 0.1s ease-out', transformStyle: 'preserve-3d' }}
-      className={`transition-shadow duration-300 ${className}`}
-    >
-      {children}
-    </div>
-  );
-}
+const cardPageVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] as const }
+  }
+};
 
 export default function PortfolioHome() {
-  const [isDark, setIsDark] = useState(false);
-  const [isSkillsOpen, setIsSkillsOpen] = useState(true);
+  const [isDark, setIsDark] = useState(true);
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [emailSent, setEmailSent] = useState(false);
 
-  const phoneNumber = "+201116495454"; 
-  const whatsappUrl = `https://wa.me/201116495454`;
+  const handleSendEmail = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (formData.name && formData.email && formData.message) {
+      setEmailSent(true);
+      setTimeout(() => setEmailSent(false), 5000);
+      setFormData({ name: '', email: '', message: '' });
+    }
+  };
 
   return (
-    <div className={`min-h-screen font-sans relative overflow-hidden transition-colors duration-300 scroll-smooth ${
+    <div className={`min-h-screen font-sans relative overflow-x-hidden transition-colors duration-500 ${
       isDark ? 'bg-[#0b0f19] text-slate-200' : 'bg-[#fafafa] text-slate-800'
     }`}>
       
       <InteractiveParticlesCanvas isDark={isDark} />
-      
-      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[250px] blur-[100px] pointer-events-none z-0 opacity-60 ${
-        isDark ? 'bg-cyan-600/10' : 'bg-cyan-400/15'
+
+      {/* Background Ambient Lights */}
+      <div className={`fixed top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[500px] blur-[150px] pointer-events-none z-0 ${
+        isDark ? 'bg-cyan-600/15' : 'bg-cyan-400/20'
       }`} />
 
-      {/* Floating Navbar */}
-      <header className="pt-6 px-4 max-w-5xl mx-auto relative z-50">
-        <div className={`backdrop-blur-md rounded-2xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors ${
-          isDark ? 'bg-slate-900/80 text-slate-100 border border-slate-800/80' : 'bg-white/80 text-slate-900 border border-slate-200/80'
+      {/* Floating Header - تم رفع الـ z-index وضبط الـ pointer-events */}
+      <header className="fixed top-6 left-0 right-0 z-50 px-4 max-w-6xl mx-auto pointer-events-auto">
+        <div className={`backdrop-blur-md rounded-2xl px-8 py-4 flex items-center justify-between border shadow-2xl transition-all ${
+          isDark ? 'bg-slate-900/95 border-slate-800 text-slate-100' : 'bg-white/95 border-slate-200 text-slate-900'
         }`}>
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-cyan-950/10 border-2 border-cyan-400 p-1 flex items-center justify-center overflow-hidden">
-              <img src="/logo.svg" alt="Logo" className="w-full h-full object-contain" />
-            </div>
-            <span className="font-extrabold text-sm tracking-wide">ABDULRAHMAN</span>
+          <div className="flex items-center gap-4">
+            <Link href="/" className="w-12 h-12 rounded-2xl bg-slate-950 border-2 border-cyan-400 p-1 flex items-center justify-center overflow-hidden shadow-lg shadow-cyan-500/20 cursor-pointer">
+              <img src="/logo.svg" alt="Abdulrahman" className="w-full h-full object-contain" />
+            </Link>
+            <span className="font-black text-xs tracking-widest uppercase text-cyan-500">ABDULRAHMAN</span>
           </div>
 
-          <nav className="flex items-center gap-6 text-xs font-semibold text-slate-700 dark:text-slate-300">
-            <Link href="/about" className="hover:text-cyan-600 transition">About</Link>
-            <Link href="/skills" className="hover:text-cyan-600 transition">Skills</Link>
-            <a href="#projects" className="hover:text-cyan-600 transition">Projects</a>
-            <a href="#contact" className="hover:text-cyan-600 transition">Contact</a>
+          <nav className="flex items-center gap-8 text-sm font-extrabold">
+            <Link href="/about" className="hover:text-cyan-500 transition cursor-pointer">About</Link>
+            <a href="#skills-card" className="hover:text-cyan-500 transition cursor-pointer">Skills</a>
+            <a href="#projects-card" className="hover:text-cyan-500 transition cursor-pointer">Projects</a>
+            <a href="#contact-card" className="hover:text-cyan-500 transition cursor-pointer">Contact</a>
             
             <button 
               onClick={() => setIsDark(!isDark)}
+              className="p-2.5 rounded-full bg-slate-200 dark:bg-slate-800 text-amber-500 hover:scale-110 transition shadow cursor-pointer"
               title="Toggle Theme"
-              className="p-2 rounded-full bg-slate-900 text-amber-400 hover:bg-slate-800 transition shadow-md flex items-center justify-center"
             >
-              {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-200" />}
+              {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
             </button>
           </nav>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-6 py-12 space-y-20 relative z-10">
+      {/* Main Container */}
+      <main className="max-w-6xl mx-auto px-6 pt-32 pb-16 space-y-10 relative z-10">
 
-        {/* Hero Section (Updated with Personal Photo) */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center pt-4">
-          
-          <div className="space-y-6 text-center md:text-left">
-            <div className="inline-block">
-              <span className={`px-4 py-1.5 rounded-full font-bold text-xs uppercase tracking-wider shadow-inner ${
-                isDark 
-                  ? 'bg-cyan-950/80 border border-cyan-400/40 text-cyan-300' 
-                  : 'bg-cyan-100/80 border border-cyan-300 text-cyan-800'
-              }`}>
-                SENIOR GENERAL ACCOUNTANT & FINANCIAL DATA ANALYST
-              </span>
+        {/* ==================== CARD 1: HERO / INTRO ==================== */}
+        <motion.section 
+          id="hero-card" 
+          className="flex items-center justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={cardPageVariants}
+        >
+          <div className={`relative w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col md:flex-row items-center gap-10 ${
+            isDark ? 'bg-slate-900/90 border-slate-800 shadow-cyan-950/20' : 'bg-white border-slate-200 shadow-slate-200'
+          }`}>
+            
+            <div className="relative z-20 md:w-7/12 space-y-5 text-center md:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-cyan-100/90 text-cyan-800 dark:bg-cyan-950/90 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800">
+                <Sparkles className="w-4 h-4" />
+                <span>Senior Accountant & Data Analyst</span>
+              </div>
+
+              <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight">
+                Hi, I'm <span className="text-cyan-500">Abdulrahman</span>
+              </h1>
+
+              <p className={`text-sm sm:text-base leading-relaxed font-semibold max-w-2xl ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
+                Experienced Senior General Accountant with +7 years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools (Python, SQL, Power BI) to extract actionable business insights.
+              </p>
+
+              <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4">
+                <Link 
+                  href="/about" 
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/25 transition hover:scale-105 cursor-pointer"
+                >
+                  <User className="w-4 h-4" />
+                  <span>ABOUT ME</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+
+                <a 
+                  href="/Abdulrahman_Mohamed_CV.pdf" 
+                  download 
+                  className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs transition border cursor-pointer ${
+                    isDark 
+                      ? 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border-cyan-500/40 shadow-lg shadow-cyan-950/50' 
+                      : 'bg-slate-200 hover:bg-slate-300 text-slate-900 border-slate-300'
+                  }`}
+                >
+                  <FileText className="w-4 h-4 text-cyan-400" />
+                  <span>Resume PDF</span>
+                </a>
+              </div>
             </div>
 
-            <h1 className={`text-4xl sm:text-5xl font-black tracking-tight ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
-              Abdulrahman Mohamed
-            </h1>
-
-            <p className={`text-sm sm:text-base leading-relaxed font-normal ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
-              Experienced Senior General Accountant with +7 years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools to extract actionable business insights.
-            </p>
-
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 pt-2 font-medium text-xs">
-              <a 
-                href="/Abdulrahman_Mohamed_CV.pdf" 
-                download
-                className="px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-bold flex items-center gap-2 shadow-lg shadow-cyan-500/20 transition"
-              >
-                <FileText className="w-4 h-4" />
-                <span>Download Resume (PDF)</span>
-              </a>
-
-              <a 
-                href="mailto:abdulrahmanmohamed306@gmail.com"
-                className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-              >
-                <Mail className="w-4 h-4" />
-                <span>Contact Me</span>
-              </a>
-
-              <a 
-                href="https://linkedin.com/in/abdulrahman-mohammed-395556148" 
-                target="_blank" 
-                rel="noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-              >
-                <Share2 className="w-4 h-4" />
-                <span>LinkedIn</span>
-              </a>
-
-              <a 
-                href="https://github.com/abdulrahmanmohamed306" 
-                target="_blank" 
-                rel="noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-slate-200 hover:bg-white text-slate-900 font-semibold flex items-center gap-2 transition dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
-              >
-                <Globe className="w-4 h-4" />
-                <span>GitHub</span>
-              </a>
+            {/* Hero Section Image Frame */}
+            <div className="relative md:w-5/12 h-80 md:h-[420px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-sky-500 blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
+              <img 
+                src="/hero section.png" 
+                alt="Abdulrahman Mohamed Hero" 
+                className="relative z-10 w-full h-full object-cover rounded-2xl group-hover:scale-105 transition duration-500"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/logo.svg';
+                  (e.target as HTMLImageElement).className = 'relative z-10 w-3/4 h-3/4 object-contain';
+                }}
+              />
             </div>
+
           </div>
+        </motion.section>
 
-          {/* Personal Photo Element */}
-          <div className="flex justify-center">
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-sky-500 rounded-full blur-lg opacity-75 group-hover:opacity-100 transition duration-500" />
-              <div className="relative w-48 h-48 md:w-60 md:h-60 rounded-full bg-white dark:bg-slate-950 border-4 border-cyan-400 overflow-hidden shadow-2xl">
-                <Image 
-                  src="/my.photo.jpg" 
-                  alt="Abdulrahman Mohamed" 
-                  fill
-                  priority
-                  className="object-cover object-center"
+
+        {/* ==================== CARD 2: SKILLS REVEAL ==================== */}
+        <motion.section 
+          id="skills-card" 
+          className="flex items-center justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={cardPageVariants}
+        >
+          <div className={`w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+            isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+          }`}>
+            
+            <div className="relative md:w-5/12 h-72 md:h-[380px] w-full rounded-3xl overflow-hidden shadow-2xl border border-cyan-500/30 flex-shrink-0 group">
+              <img 
+                src="/workspace.jpg" 
+                alt="Abdulrahman Workspace & Skills" 
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = 'none';
+                }}
+              />
+              <div className={`absolute inset-0 bg-gradient-to-t ${
+                isDark ? 'from-slate-900/80 via-transparent to-transparent' : 'from-white/50 via-transparent to-transparent'
+              }`} />
+            </div>
+
+            <div className="space-y-6 text-center md:text-left flex-1">
+              <span className="text-xs font-bold text-cyan-500 uppercase tracking-widest">TECHNICAL & FINANCIAL SKILLS</span>
+              <h2 className="text-3xl sm:text-5xl font-black">Core Capabilities</h2>
+              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Combining precision in General Ledger & Financial Statements with Python & Power BI to transform raw transactions into automated KPI dashboards.
+              </p>
+
+              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 pb-2">
+                <div className="flex items-center gap-2 text-emerald-400 bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
+                  <Calculator className="w-5 h-5" />
+                  <span>Financial GL & Costing</span>
+                </div>
+                <div className="flex items-center gap-2 text-cyan-400 bg-cyan-950/30 p-3 rounded-xl border border-cyan-900/50">
+                  <BarChart3 className="w-5 h-5" />
+                  <span>Python & SQL Analytics</span>
+                </div>
+              </div>
+
+              <div>
+                <Link 
+                  href="/skills" 
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 text-cyan-400 dark:bg-slate-800 dark:hover:bg-slate-700 font-bold text-xs transition hover:scale-105 border border-cyan-500/30 cursor-pointer"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  <span>EXPLORE ALL SKILLS</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </motion.section>
+
+
+        {/* ==================== CARD 3: GENERAL PROJECTS OVERVIEW ==================== */}
+        <motion.section 
+          id="projects-card" 
+          className="flex items-center justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={cardPageVariants}
+        >
+          <div className={`w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+            isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+          }`}>
+            
+            <div className="space-y-6 text-center md:text-left flex-1">
+              <span className="text-xs font-bold text-cyan-500 uppercase tracking-widest flex items-center justify-center md:justify-start gap-2">
+                <FolderKanban className="w-4 h-4" />
+                <span>FEATURED CASE STUDIES & DASHBOARDS</span>
+              </span>
+              
+              <h2 className="text-3xl sm:text-5xl font-black">Data-Driven Projects</h2>
+              
+              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Explore hands-on data analytics and financial modeling projects utilizing Python, Pandas, SQL Server, and interactive Power BI dashboards to drive revenue growth and customer retention.
+              </p>
+
+              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 pb-2">
+                <div className="flex items-center gap-2 text-cyan-400 bg-cyan-950/30 p-3 rounded-xl border border-cyan-900/50">
+                  <PieChart className="w-5 h-5" />
+                  <span>Customer Churn EDA</span>
+                </div>
+                <div className="flex items-center gap-2 text-emerald-400 bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
+                  <BarChart3 className="w-5 h-5" />
+                  <span>Revenue & Sales BI</span>
+                </div>
+              </div>
+
+              <div>
+                <Link 
+                  href="/projects" 
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/25 transition hover:scale-105 cursor-pointer"
+                >
+                  <Layers className="w-4 h-4" />
+                  <span>EXPLORE ALL PROJECTS</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+
+            <div className="relative md:w-5/12 h-80 md:h-[380px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
+              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-sky-500 blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
+              <img 
+                src="/Firefly_Gemini Flash_data analysis  886741.png" 
+                alt="Data Analytics & Dashboard Projects" 
+                className="relative z-10 w-full h-full object-cover rounded-2xl group-hover:scale-105 transition duration-500"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).src = '/logo.svg';
+                  (e.target as HTMLImageElement).className = 'relative z-10 w-3/4 h-3/4 object-contain';
+                }}
+              />
+            </div>
+
+          </div>
+        </motion.section>
+
+
+        {/* ==================== CARD 4: CONTACT ==================== */}
+        <motion.section 
+          id="contact-card" 
+          className="flex items-center justify-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={cardPageVariants}
+        >
+          <div className={`w-full p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+            isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
+          }`}>
+            <div className="space-y-6 text-center md:text-left flex-1">
+              <div className="w-28 h-28 rounded-2xl bg-slate-950 border-2 border-cyan-400/80 overflow-hidden mx-auto md:mx-0 shadow-lg p-3 flex items-center justify-center">
+                <img 
+                  src="/logo.svg" 
+                  alt="Abdulrahman Logo" 
+                  className="w-full h-full object-contain"
                 />
               </div>
-            </div>
-          </div>
 
-        </section>
+              <h2 className="text-3xl sm:text-5xl font-black">Let's Connect</h2>
+              <p className={`text-sm sm:text-base ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
+                Available for Senior Accounting, Financial Data Analytics, and BI Opportunities.
+              </p>
 
-        {/* Skills Section */}
-        <section id="skills" className="space-y-6 pt-6">
-          <div className="flex items-center justify-between border-l-4 border-cyan-400 pl-3">
-            <button 
-              onClick={() => setIsSkillsOpen(!isSkillsOpen)}
-              className="flex items-center justify-between w-full text-left group focus:outline-none"
-            >
-              <div className="flex items-center gap-3">
-                <h2 className={`text-xl font-extrabold group-hover:text-cyan-500 transition ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
-                  Technical & Financial Expertise (Skills)
-                </h2>
-                <span className={`text-[11px] px-2.5 py-0.5 rounded-full border transition ${
-                  isDark ? 'bg-slate-800 border-slate-700 text-slate-400' : 'bg-slate-200 border-slate-300 text-slate-600'
-                }`}>
-                  {isSkillsOpen ? 'إخفاء' : 'إظهار'}
-                </span>
-              </div>
-              <ChevronDown className={`w-5 h-5 text-cyan-400 transition-transform duration-300 ${isSkillsOpen ? 'rotate-180' : ''}`} />
-            </button>
-          </div>
-
-          <div className={`grid transition-all duration-300 ease-in-out overflow-hidden ${
-            isSkillsOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
-          }`}>
-            <div className="overflow-hidden">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 pt-2">
-                
-                {/* كارت المحاسبة والمالية */}
-                <TiltCard isDark={isDark}>
-                  <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 space-y-4 shadow-sm border border-slate-200 dark:border-slate-800 h-full flex flex-col justify-between">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400">
-                        <Calculator className="w-5 h-5" />
-                        <h3 className="text-base font-bold">Financial Accounting</h3>
-                      </div>
-                      <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                          <span>Financial Statements Preparation & Analysis (Income Statement, Balance Sheet, Cash Flow)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                          <span>Cost Accounting & Budgeting</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                          <span>General Ledger Management & Reconciliation</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                          <span>Accounts Payable & Receivable (AP/AR)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500 mt-0.5 flex-shrink-0" />
-                          <span>Financial Auditing & Internal Control</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </TiltCard>
-
-                {/* كارت تحليل البيانات */}
-                <TiltCard isDark={isDark}>
-                  <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 space-y-4 shadow-sm border border-slate-200 dark:border-slate-800 h-full flex flex-col justify-between">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-cyan-600 dark:text-cyan-400">
-                        <BarChart3 className="w-5 h-5" />
-                        <h3 className="text-base font-bold">Data Analytics & BI</h3>
-                      </div>
-                      <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 mt-0.5 flex-shrink-0" />
-                          <span><strong>Data Visualization:</strong> Power BI, Tableau (Interactive Dashboards & Reports)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 mt-0.5 flex-shrink-0" />
-                          <span><strong>Programming:</strong> Python (Pandas, NumPy, Matplotlib, Seaborn)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 mt-0.5 flex-shrink-0" />
-                          <span><strong>Database:</strong> SQL Server (Advanced Queries, JOINs, Aggregations)</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-cyan-500 mt-0.5 flex-shrink-0" />
-                          <span><strong>Advanced Excel:</strong> Power Query, Pivot Tables, VLOOKUP, Financial Modeling</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </TiltCard>
-
-                {/* كارت المهارات المهنية والتحليلية */}
-                <TiltCard isDark={isDark}>
-                  <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 space-y-4 shadow-sm border border-slate-200 dark:border-slate-800 h-full flex flex-col justify-between">
-                    <div className="space-y-3">
-                      <div className="flex items-center gap-2 text-amber-600 dark:text-amber-400">
-                        <Globe className="w-5 h-5" />
-                        <h3 className="text-base font-bold">Core Competencies</h3>
-                      </div>
-                      <ul className="space-y-2 text-xs text-slate-600 dark:text-slate-400">
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
-                          <span>Exploratory Data Analysis (EDA) & Market Basket Analysis</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
-                          <span>Financial Modeling & Automated Business KPIs</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
-                          <span>Analytical Thinking & Problem Solving</span>
-                        </li>
-                        <li className="flex items-start gap-2">
-                          <CheckCircle2 className="w-3.5 h-3.5 text-amber-500 mt-0.5 flex-shrink-0" />
-                          <span>Data Storytelling & Cross-functional Communication</span>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </TiltCard>
-
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section id="projects" className="space-y-6 pt-4">
-          <div className="flex items-center gap-3 border-l-4 border-cyan-400 pl-3">
-            <h2 className={`text-xl font-extrabold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>Featured Projects</h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            
-            {/* Project 1 */}
-            <TiltCard isDark={isDark}>
-              <div className="p-8 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 space-y-4 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col justify-between h-full">
-                <div className="space-y-3">
-                  <span className="text-[10px] font-bold text-cyan-700 bg-cyan-100 px-3 py-1 rounded-full uppercase dark:bg-cyan-950 dark:text-cyan-300">
-                    Featured EDA & Python
-                  </span>
-                  <h3 className="text-xl font-bold">E-Commerce Customer Retention Analysis</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    An end-to-end data analytics project investigating customer churn, order frequencies, regional performance, and product profitability.
-                  </p>
+              <div className="space-y-3 text-xs sm:text-sm font-semibold pt-2">
+                <div className="flex items-center justify-center md:justify-start gap-3 text-cyan-500">
+                  <Mail className="w-5 h-5" />
+                  <span>abdulrahmanmohamed306@gmail.com</span>
                 </div>
+                <div className="flex items-center justify-center md:justify-start gap-3 text-emerald-500">
+                  <Phone className="w-5 h-5" />
+                  <span>+20 111 649 5454</span>
+                </div>
+              </div>
+            </div>
 
-                <div className="pt-2">
-                  <Link 
-                    href="/projects/ecommerce-customer-retention" 
-                    className="inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition shadow-md shadow-cyan-500/20"
+            <div className="w-full md:w-1/2 p-8 rounded-2xl bg-slate-950 border border-slate-800 text-slate-100 space-y-5 shadow-xl">
+              <h3 className="font-bold text-base text-cyan-400 flex items-center gap-2">
+                <Send className="w-5 h-5" />
+                <span>Send Direct Message</span>
+              </h3>
+
+              {emailSent ? (
+                <div className="p-4 rounded-xl bg-emerald-500/20 text-emerald-400 text-xs font-bold text-center">
+                  Thank you! Your message has been sent successfully.
+                </div>
+              ) : (
+                <form onSubmit={handleSendEmail} className="space-y-4 text-xs">
+                  <input 
+                    type="text" 
+                    placeholder="Your Name" 
+                    required
+                    value={formData.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
+                  />
+                  <input 
+                    type="email" 
+                    placeholder="Your Email" 
+                    required
+                    value={formData.email}
+                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
+                  />
+                  <textarea 
+                    placeholder="Your Message..." 
+                    rows={4} 
+                    required
+                    value={formData.message}
+                    onChange={(e) => setFormData({...formData, message: e.target.value})}
+                    className="w-full px-4 py-3 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
+                  />
+                  <button 
+                    type="submit" 
+                    className="w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 cursor-pointer"
                   >
-                    <span>View Full Project Details</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </TiltCard>
-
-            {/* Project 2: Online Sales Intelligence */}
-            <TiltCard isDark={isDark}>
-              <div className="p-8 rounded-2xl bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 space-y-4 shadow-sm border border-slate-200 dark:border-slate-800 flex flex-col justify-between h-full">
-                <div className="space-y-3">
-                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-100 px-3 py-1 rounded-full uppercase dark:bg-emerald-950 dark:text-emerald-300">
-                    Real Dataset & EDA
-                  </span>
-                  <h3 className="text-xl font-bold">Global Online Sales & Revenue Intelligence</h3>
-                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                    An end-to-end data analytics project leveraging real online transaction datasets to evaluate regional sales distribution, unit pricing, and top-performing product categories.
-                  </p>
-                </div>
-
-                <div className="pt-2">
-                  <Link 
-                    href="/projects/online-sales-analysis" 
-                    className="inline-flex items-center gap-2 text-xs font-bold px-5 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 transition shadow-md shadow-cyan-500/20"
-                  >
-                    <span>View Full Project Details</span>
-                    <ArrowUpRight className="w-4 h-4" />
-                  </Link>
-                </div>
-              </div>
-            </TiltCard>
-
-          </div>
-        </section>
-
-        {/* Contact CTA */}
-        <TiltCard isDark={isDark}>
-          <section id="contact" className="p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100 space-y-5 text-center shadow-sm">
-            <h2 className="text-2xl font-bold">Let's Connect</h2>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md mx-auto">
-              Available for Senior Accounting, Financial Data Analytics, and Business Intelligence opportunities.
-            </p>
-            
-            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-              <a 
-                href="mailto:abdulrahmanmohamed306@gmail.com" 
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-950 text-cyan-400 font-bold text-xs hover:bg-slate-900 transition shadow-md"
-              >
-                <Mail className="w-4 h-4" />
-                <span>abdulrahmanmohamed306@gmail.com</span>
-              </a>
-
-              <a 
-                href={`tel:${phoneNumber}`} 
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white font-bold text-xs transition shadow-md"
-              >
-                <Phone className="w-4 h-4" />
-                <span>01116495454</span>
-              </a>
-
-              <a 
-                href={whatsappUrl} 
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs transition shadow-md"
-              >
-                <MessageCircle className="w-4 h-4" />
-                <span>WhatsApp</span>
-              </a>
+                    <span>Send Message</span>
+                    <Send className="w-4 h-4" />
+                  </button>
+                </form>
+              )}
             </div>
-          </section>
-        </TiltCard>
+          </div>
+        </motion.section>
 
       </main>
 
-      <footer className="py-8 text-center text-xs text-slate-500 font-medium relative z-10">
+      <footer className="py-6 text-center text-xs text-slate-500 font-medium border-t border-slate-800">
         © 2026 Abdulrahman Mohamed. All rights reserved.
       </footer>
     </div>

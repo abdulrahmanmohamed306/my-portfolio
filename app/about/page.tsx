@@ -191,8 +191,7 @@ function TiltCard({ children, className = '', isDark }: { children: React.ReactN
 }
 
 export default function AboutPage() {
-  // تم ضبط الحالة الافتراضية هنا لتكون false (يعني Light Mode افتراضياً)
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   return (
     <div className={`min-h-screen font-sans relative overflow-hidden transition-colors duration-300 scroll-smooth ${
@@ -210,7 +209,7 @@ export default function AboutPage() {
         <div className={`backdrop-blur-md rounded-2xl px-6 py-3 flex items-center justify-between shadow-sm transition-colors ${
           isDark ? 'bg-slate-900/80 text-slate-100 border border-slate-800/80' : 'bg-white/80 text-slate-900 border border-slate-200/80'
         }`}>
-          <Link href="/" className={`flex items-center gap-2 text-xs font-bold transition ${
+          <Link href="/" className={`flex items-center gap-2 text-xs font-bold transition cursor-pointer ${
             isDark ? 'text-cyan-400 hover:text-cyan-300' : 'text-cyan-700 hover:text-cyan-800'
           }`}>
             <ArrowLeft className="w-4 h-4" />
@@ -226,7 +225,7 @@ export default function AboutPage() {
 
           <button 
             onClick={() => setIsDark(!isDark)}
-            className={`p-2 rounded-full transition shadow-md ${
+            className={`p-2 rounded-full transition shadow-md cursor-pointer ${
               isDark ? 'bg-slate-900 text-amber-400 hover:bg-slate-800' : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
             }`}
             aria-label="Toggle Theme"
@@ -280,7 +279,7 @@ export default function AboutPage() {
               <p className={`text-xs sm:text-base font-semibold leading-relaxed ${
                 isDark ? 'text-slate-300' : 'text-slate-700'
               }`}>
-                Experienced Senior General Accountant with 7+ years of expertise in financial reporting, general ledger operations, and treasury management. I blend deep accounting expertise with modern data science tools like Python, SQL, Power BI, and Advanced Excel to transform accounting and business operations into actionable, data-driven insights.
+                Experienced Senior General Accountant with <span dir="ltr">&#43;7</span> years of expertise in financial reporting, general ledger operations, and treasury management. I blend deep accounting expertise with modern data science tools like Python, SQL, Power BI, and Advanced Excel to transform accounting and business operations into actionable, data-driven insights.
               </p>
 
               <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 pt-2 text-xs font-bold">
@@ -323,11 +322,14 @@ export default function AboutPage() {
           {/* Key Metrics Stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
             <TiltCard isDark={isDark}>
-              <div className={`p-4 rounded-xl border shadow-sm text-center h-full ${
+              <div className={`p-4 rounded-xl border shadow-sm text-center h-full flex flex-col items-center justify-center ${
                 isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
               }`}>
-                <p className={`text-2xl font-black ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>7+</p>
-                <p className={`text-xs font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Years Experience</p>
+                <div dir="ltr" className="flex flex-row-reverse items-center justify-center">
+                  <span className={`text-2xl font-black ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>7</span>
+                  <span className={`text-2xl font-black ${isDark ? 'text-cyan-400' : 'text-cyan-600'}`}>&#43;</span>
+                </div>
+                <p className={`text-xs font-bold mt-1 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Years Experience</p>
               </div>
             </TiltCard>
             
