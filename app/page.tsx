@@ -172,6 +172,9 @@ export default function PortfolioHome() {
   const handleSendEmail = (e: React.FormEvent) => {
     e.preventDefault();
     if (formData.name && formData.email && formData.message) {
+      const subject = encodeURIComponent(`Portfolio message from ${formData.name}`);
+      const body = encodeURIComponent(`${formData.message}\n\n— ${formData.name} (${formData.email})`);
+      window.location.href = `mailto:abdulrahmanmohamed306@gmail.com?subject=${subject}&body=${body}`;
       setEmailSent(true);
       setTimeout(() => setEmailSent(false), 5000);
       setFormData({ name: '', email: '', message: '' });
@@ -191,18 +194,18 @@ export default function PortfolioHome() {
       }`} />
 
       {/* Floating Header */}
-      <header className="fixed top-6 left-0 right-0 z-50 px-4 max-w-6xl mx-auto pointer-events-auto">
-        <div className={`backdrop-blur-md rounded-2xl px-8 py-4 flex items-center justify-between border shadow-2xl transition-all ${
+      <header className="fixed top-3 sm:top-6 left-0 right-0 z-50 px-4 max-w-6xl mx-auto pointer-events-auto">
+        <div className={`backdrop-blur-md rounded-2xl px-4 sm:px-8 py-3 sm:py-4 flex items-center justify-between gap-3 border shadow-2xl transition-all ${
           isDark ? 'bg-slate-900/95 border-slate-800 text-slate-100' : 'bg-white/95 border-slate-200 text-slate-900'
         }`}>
-          <div className="flex items-center gap-4">
-            <Link href="/" className="w-12 h-12 rounded-2xl bg-slate-950 border-2 border-cyan-400 p-1 flex items-center justify-center overflow-hidden shadow-lg shadow-cyan-500/20 cursor-pointer">
+          <div className="flex items-center gap-4 shrink-0">
+            <Link href="/" className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-slate-950 border-2 border-cyan-400 p-1 flex items-center justify-center overflow-hidden shadow-lg shadow-cyan-500/20 cursor-pointer">
               <img src="/logo.svg" alt="Abdulrahman" className="w-full h-full object-contain" />
             </Link>
-            <span className="font-black text-xs tracking-widest uppercase text-cyan-500">ABDULRAHMAN</span>
+            <span className="hidden sm:inline font-black text-xs tracking-widest uppercase text-cyan-500">ABDULRAHMAN</span>
           </div>
 
-          <nav className="flex items-center gap-8 text-sm font-extrabold">
+          <nav className="flex items-center gap-3 sm:gap-8 text-xs sm:text-sm font-extrabold">
             <Link href="/about" className="hover:text-cyan-500 transition cursor-pointer">About</Link>
             <a href="#skills-card" className="hover:text-cyan-500 transition cursor-pointer">Skills</a>
             <a href="#projects-card" className="hover:text-cyan-500 transition cursor-pointer">Projects</a>
@@ -223,14 +226,14 @@ export default function PortfolioHome() {
       <main className="relative z-10 w-full">
 
         {/* ==================== SECTION 1: HERO / INTRO ==================== */}
-        <section id="hero-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+        <section id="hero-card" className="w-full min-h-screen flex items-center justify-center px-4 sm:px-6 pt-32 pb-12 md:pt-28">
           <motion.div 
-            className={`relative w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col md:flex-row items-center gap-10 ${
+            className={`relative w-full max-w-6xl p-6 sm:p-10 md:p-14 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col md:flex-row items-center gap-10 ${
               isDark ? 'bg-slate-900/90 border-slate-800 shadow-cyan-950/20' : 'bg-white border-slate-200 shadow-slate-200'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="relative z-20 md:w-7/12 space-y-5 text-center md:text-left">
@@ -288,14 +291,14 @@ export default function PortfolioHome() {
         </section>
 
         {/* ==================== DIVIDER 1: Data Quote & Image 1 ==================== */}
-        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
+        <section className="w-full flex items-center justify-center px-4 sm:px-6 py-10 md:py-14">
           <motion.div 
-            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
+            className={`w-full max-w-6xl p-6 sm:p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
               isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="md:w-1/2 space-y-6 text-center md:text-left">
@@ -321,14 +324,14 @@ export default function PortfolioHome() {
         </section>
 
         {/* ==================== SECTION 2: SKILLS ==================== */}
-        <section id="skills-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+        <section id="skills-card" className="w-full flex items-center justify-center px-4 sm:px-6 py-10 md:py-14 scroll-mt-28">
           <motion.div 
-            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+            className={`w-full max-w-6xl p-6 sm:p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
               isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="relative md:w-5/12 h-64 md:h-[350px] w-full rounded-3xl overflow-hidden shadow-2xl border border-cyan-500/30 flex-shrink-0 group">
@@ -352,7 +355,7 @@ export default function PortfolioHome() {
                 Combining precision in General Ledger & Financial Statements with Python & Power BI to transform raw transactions into automated KPI dashboards.
               </p>
 
-              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 pb-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs font-bold text-slate-400 pb-2">
                 <div className="flex items-center gap-2 text-emerald-400 bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
                   <Calculator className="w-5 h-5" />
                   <span>Financial GL & Costing</span>
@@ -378,14 +381,14 @@ export default function PortfolioHome() {
         </section>
 
         {/* ==================== DIVIDER 2: Analytics Quote & Image 2 ==================== */}
-        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
+        <section className="w-full flex items-center justify-center px-4 sm:px-6 py-10 md:py-14">
           <motion.div 
-            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row-reverse items-center gap-10 ${
+            className={`w-full max-w-6xl p-6 sm:p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row-reverse items-center gap-10 ${
               isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="md:w-1/2 space-y-6 text-center md:text-left">
@@ -411,14 +414,14 @@ export default function PortfolioHome() {
         </section>
 
         {/* ==================== SECTION 3: PROJECTS ==================== */}
-        <section id="projects-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+        <section id="projects-card" className="w-full flex items-center justify-center px-4 sm:px-6 py-10 md:py-14 scroll-mt-28">
           <motion.div 
-            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+            className={`w-full max-w-6xl p-6 sm:p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
               isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="space-y-6 text-center md:text-left flex-1">
@@ -433,7 +436,7 @@ export default function PortfolioHome() {
                 Explore hands-on data analytics and financial modeling projects utilizing Python, Pandas, SQL Server, and interactive Power BI dashboards to drive revenue growth and customer retention.
               </p>
 
-              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 pb-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs font-bold text-slate-400 pb-2">
                 <div className="flex items-center gap-2 text-cyan-400 bg-cyan-950/30 p-3 rounded-xl border border-cyan-900/50">
                   <PieChart className="w-5 h-5" />
                   <span>Customer Churn EDA</span>
@@ -472,14 +475,14 @@ export default function PortfolioHome() {
         </section>
 
         {/* ==================== DIVIDER 3: Future Quote & Image 3 ==================== */}
-        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
+        <section className="w-full flex items-center justify-center px-4 sm:px-6 py-10 md:py-14">
           <motion.div 
-            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
+            className={`w-full max-w-6xl p-6 sm:p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
               isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="md:w-1/2 space-y-6 text-center md:text-left">
@@ -505,14 +508,14 @@ export default function PortfolioHome() {
         </section>
 
         {/* ==================== SECTION 4: CONTACT ==================== */}
-        <section id="contact-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
+        <section id="contact-card" className="w-full flex items-center justify-center px-4 sm:px-6 py-10 md:py-14 scroll-mt-28">
           <motion.div 
-            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
+            className={`w-full max-w-6xl p-6 sm:p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
               isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
             }`}
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
+            viewport={{ once: true, amount: 0.15 }}
             variants={sectionVariants}
           >
             <div className="space-y-6 text-center md:text-left flex-1">
@@ -531,12 +534,14 @@ export default function PortfolioHome() {
 
               <div className="space-y-3 text-xs sm:text-sm font-semibold pt-2">
                 <div className="flex items-center justify-center md:justify-start gap-3 text-cyan-500">
-                  <Mail className="w-5 h-5" />
-                  <span>abdulrahmanmohamed306@gmail.com</span>
+                  <Mail className="w-5 h-5 shrink-0" />
+                  <a href="mailto:abdulrahmanmohamed306@gmail.com" className="hover:underline break-all">abdulrahmanmohamed306@gmail.com</a>
                 </div>
                 <div className="flex items-center justify-center md:justify-start gap-3 text-emerald-500">
-                  <Phone className="w-5 h-5" />
-                  <span>+20 111 649 5454</span>
+                  <Phone className="w-5 h-5 shrink-0" />
+                  <a href="tel:+201116495454" className="hover:underline">+20 111 649 5454</a>
+                  <span className="opacity-50">·</span>
+                  <a href="https://wa.me/201116495454" target="_blank" rel="noopener noreferrer" className="hover:underline">WhatsApp</a>
                 </div>
               </div>
             </div>
@@ -549,7 +554,7 @@ export default function PortfolioHome() {
 
               {emailSent ? (
                 <div className="p-4 rounded-xl bg-emerald-500/20 text-emerald-400 text-xs font-bold text-center">
-                  Thank you! Your message has been sent successfully.
+                  Your email app should now be open with your message ready. Just press Send there.
                 </div>
               ) : (
                 <form onSubmit={handleSendEmail} className="space-y-3 text-xs">
