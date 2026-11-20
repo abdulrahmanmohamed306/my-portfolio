@@ -1,596 +1,215 @@
-'use client';
+import Link from "next/link";
+import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
+import { profile, projects } from "@/lib/site";
+import { LedgerStatement } from "@/components/ledger-statement";
+import { LedgerRuler } from "@/components/ledger-ruler";
+import { DriftingLines } from "@/components/drifting-lines";
+import { InteractiveDashboard } from "@/components/interactive-dashboard";
+import { SkillsTrialBalance } from "@/components/skills-trial-balance";
+import { CareerWaterfall } from "@/components/career-waterfall";
+import { SectionHeading } from "@/components/section-heading";
+import { ContactForm } from "@/components/contact-form";
+import { ProjectDashboard } from "@/components/project-dashboard";
 
-import React, { useState, useEffect, useRef } from 'react';
-import Link from 'next/link';
-import { motion, Variants } from 'framer-motion';
-import { 
-  FileText, 
-  Mail, 
-  Moon, 
-  Sun,
-  Phone,
-  BarChart3,
-  Calculator,
-  ArrowRight,
-  User,
-  Send,
-  Sparkles,
-  Layers,
-  FolderKanban,
-  PieChart,
-  Quote
-} from "lucide-react";
+const textLink =
+  "text-sm font-semibold text-ink underline decoration-rule-strong underline-offset-4 hover:text-ledger hover:decoration-ledger";
 
-// Interactive Gentle Particles Background Component
-function InteractiveParticlesCanvas({ isDark }: { isDark: boolean }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
-
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    const mouse = {
-      x: -1000,
-      y: -1000,
-      radius: 130
-    };
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    };
-
-    const handleMouseLeave = () => {
-      mouse.x = -1000;
-      mouse.y = -1000;
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
-    const particlesCount = Math.floor((width * height) / 14000);
-    const particles: Array<{
-      x: number;
-      y: number;
-      vx: number;
-      vy: number;
-      size: number;
-      baseX: number;
-      baseY: number;
-    }> = [];
-
-    for (let i = 0; i < particlesCount; i++) {
-      const x = Math.random() * width;
-      const y = Math.random() * height;
-      particles.push({
-        x,
-        y,
-        vx: (Math.random() - 0.5) * 0.6,
-        vy: (Math.random() - 0.5) * 0.6,
-        size: Math.random() * 1.5 + 1,
-        baseX: x,
-        baseY: y
-      });
-    }
-
-    const draw = () => {
-      ctx.clearRect(0, 0, width, height);
-
-      const dotColor = isDark ? 'rgba(56, 189, 248, 0.35)' : 'rgba(2, 132, 199, 0.3)';
-      const lineColor = isDark ? 'rgba(56, 189, 248, 0.08)' : 'rgba(2, 132, 199, 0.07)';
-
-      particles.forEach((p, index) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > width) p.vx *= -1;
-        if (p.y < 0 || p.y > height) p.vy *= -1;
-
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < mouse.radius) {
-          const force = (mouse.radius - distance) / mouse.radius;
-          const angle = Math.atan2(dy, dx);
-          p.x -= Math.cos(angle) * force * 2.5;
-          p.y -= Math.sin(angle) * force * 2.5;
-        }
-
-        ctx.fillStyle = dotColor;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-
-        for (let j = index + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const ndx = p.x - p2.x;
-          const ndy = p.y - p2.y;
-          const dist = Math.sqrt(ndx * ndx + ndy * ndy);
-
-          if (dist < 110) {
-            ctx.strokeStyle = lineColor;
-            ctx.lineWidth = 0.6;
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.stroke();
-          }
-        }
-      });
-
-      animationFrameId = requestAnimationFrame(draw);
-    };
-
-    draw();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-    };
-  }, [isDark]);
-
+export default function HomePage() {
   return (
-    <canvas 
-      ref={canvasRef} 
-      className="fixed inset-0 pointer-events-none z-0"
-    />
-  );
-}
+    <>
+      {/* Hero */}
+      <section className="ruled relative border-b border-rule">
+        <LedgerRuler />
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 md:pb-14">
+          <div>
+            <p className="text-sm leading-relaxed text-muted">
+              <span className="font-semibold text-ink">{profile.fullName}</span>
+              <br />
+              {profile.role}
+              <span className="ml-3 inline-flex items-center gap-1">
+                <MapPin className="h-3.5 w-3.5" aria-hidden /> {profile.location}
+              </span>
+            </p>
 
-const sectionVariants: Variants = {
-  hidden: { opacity: 0, scale: 0.92, y: 50 },
-  visible: { 
-    opacity: 1, 
-    scale: 1, 
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] as const }
-  }
-};
+            <h1 className="mt-8 font-serif text-[2.6rem] font-semibold leading-[1.08] tracking-tight text-ink sm:text-6xl lg:text-[3.5rem]">
+              I make the numbers add up, then make them explain themselves.
+            </h1>
 
-export default function PortfolioHome() {
-  const [isDark, setIsDark] = useState(true);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [emailSent, setEmailSent] = useState(false);
+            <p className="prose-measure mt-6 text-lg leading-relaxed text-ink-soft">{profile.summary}</p>
 
-  const handleSendEmail = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (formData.name && formData.email && formData.message) {
-      setEmailSent(true);
-      setTimeout(() => setEmailSent(false), 5000);
-      setFormData({ name: '', email: '', message: '' });
-    }
-  };
+            <p className="prose-measure mt-5 border-l-2 border-ledger pl-4 text-ink-soft">
+              Currently taking part in <span className="font-semibold text-ink">GCI World 2026</span>, the data science and AI
+              program of the Matsuo-Iwasawa Laboratory at the University of Tokyo.
+            </p>
 
-  return (
-    <div className={`min-h-screen font-sans relative overflow-x-hidden transition-colors duration-500 ${
-      isDark ? 'bg-[#0b0f19] text-slate-200' : 'bg-[#fafafa] text-slate-800'
-    }`}>
-      
-      <InteractiveParticlesCanvas isDark={isDark} />
-
-      {/* Background Ambient Lights */}
-      <div className={`fixed top-0 left-1/2 -translate-x-1/2 w-[1100px] h-[500px] blur-[150px] pointer-events-none z-0 ${
-        isDark ? 'bg-cyan-600/15' : 'bg-cyan-400/20'
-      }`} />
-
-      {/* Floating Header */}
-      <header className="fixed top-6 left-0 right-0 z-50 px-4 max-w-6xl mx-auto pointer-events-auto">
-        <div className={`backdrop-blur-md rounded-2xl px-8 py-4 flex items-center justify-between border shadow-2xl transition-all ${
-          isDark ? 'bg-slate-900/95 border-slate-800 text-slate-100' : 'bg-white/95 border-slate-200 text-slate-900'
-        }`}>
-          <div className="flex items-center gap-4">
-            <Link href="/" className="w-12 h-12 rounded-2xl bg-slate-950 border-2 border-cyan-400 p-1 flex items-center justify-center overflow-hidden shadow-lg shadow-cyan-500/20 cursor-pointer">
-              <img src="/logo.svg" alt="Abdulrahman" className="w-full h-full object-contain" />
-            </Link>
-            <span className="font-black text-xs tracking-widest uppercase text-cyan-500">ABDULRAHMAN</span>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link
+                href="#projects"
+                className="rounded-sm bg-ink px-6 py-3 text-sm font-semibold text-paper transition-colors hover:bg-ledger"
+              >
+                See my projects
+              </Link>
+              <Link
+                href="#contact"
+                className="rounded-sm border border-ink px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-ledger hover:text-ledger"
+              >
+                Get in touch
+              </Link>
+            </div>
           </div>
 
-          <nav className="flex items-center gap-8 text-sm font-extrabold">
-            <Link href="/about" className="hover:text-cyan-500 transition cursor-pointer">About</Link>
-            <a href="#skills-card" className="hover:text-cyan-500 transition cursor-pointer">Skills</a>
-            <a href="#projects-card" className="hover:text-cyan-500 transition cursor-pointer">Projects</a>
-            <a href="#contact-card" className="hover:text-cyan-500 transition cursor-pointer">Contact</a>
-            
-            <button 
-              onClick={() => setIsDark(!isDark)}
-              className="p-2.5 rounded-full bg-slate-200 dark:bg-slate-800 text-amber-500 hover:scale-110 transition shadow cursor-pointer"
-              title="Toggle Theme"
-            >
-              {isDark ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
-            </button>
-          </nav>
+          <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto lg:max-w-[26rem]">
+            <figure className="relative">
+              <img
+                src="/portrait.jpg"
+                alt={profile.fullName}
+                width={720}
+                height={900}
+                className="aspect-[4/5] w-full border border-rule-strong bg-sheet object-cover object-top"
+              />
+              <span aria-hidden className="absolute -right-3 -top-3 -z-10 h-full w-full border border-ledger/40" />
+            </figure>
+          </div>
         </div>
-      </header>
 
-      {/* Main Container with Full-Screen Sections */}
-      <main className="relative z-10 w-full">
+        <div className="relative z-10 mx-auto max-w-6xl px-5 pb-14 sm:px-8 md:pb-20">
+          <LedgerStatement />
+        </div>
+      </section>
 
-        {/* ==================== SECTION 1: HERO / INTRO ==================== */}
-        <section id="hero-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
-          <motion.div 
-            className={`relative w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 shadow-xl flex flex-col md:flex-row items-center gap-10 ${
-              isDark ? 'bg-slate-900/90 border-slate-800 shadow-cyan-950/20' : 'bg-white border-slate-200 shadow-slate-200'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="relative z-20 md:w-7/12 space-y-5 text-center md:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-extrabold uppercase tracking-wider bg-cyan-100/90 text-cyan-800 dark:bg-cyan-950/90 dark:text-cyan-300 border border-cyan-300 dark:border-cyan-800">
-                <Sparkles className="w-4 h-4" />
-                <span>Senior Accountant & Data Analyst</span>
+      {/* Interactive dashboard */}
+      <section aria-labelledby="explore" className="relative overflow-hidden border-b border-rule bg-sheet">
+        <DriftingLines />
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-20 sm:px-8">
+          <SectionHeading
+            id="explore"
+            title="Don't take my word for it. Explore the data."
+            intro="This is the real data from my retail sales project: 1,007 order lines from 2014 to 2017. Filter it the way a finance manager would and watch the figures recalculate."
+          />
+          <InteractiveDashboard />
+          <p className="mt-5 text-sm text-muted">
+            Want to see the code behind the numbers?{" "}
+            <Link href="/projects/retail-sales-profitability#ask" className={textLink}>
+              Ask the data a question
+            </Link>
+          </p>
+        </div>
+      </section>
+
+      {/* Projects */}
+      <section aria-labelledby="projects" className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+        <SectionHeading
+          id="projects"
+          title="Selected projects"
+          intro="Analyses I built end to end, from raw data to the charts and findings a manager would read."
+        />
+
+        <div className="divide-y divide-rule border-y border-rule">
+          {projects.map((p) => (
+            <article key={p.slug} className="grid gap-8 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] md:items-start md:gap-12">
+              <ProjectDashboard data={p.dashboard} compact />
+
+              <div className="flex flex-col">
+                <p className="text-sm text-ledger">{p.kind}</p>
+                <h3 className="mt-2 font-serif text-2xl font-semibold leading-snug text-ink sm:text-3xl">
+                  <Link href={`/projects/${p.slug}`} className="hover:text-ledger">
+                    {p.title}
+                  </Link>
+                </h3>
+                <p className="mt-3 leading-relaxed text-ink-soft">{p.summary}</p>
+
+                <ul className="mt-6 space-y-3 border-t border-rule pt-5">
+                  {p.findings.slice(0, 3).map((f) => (
+                    <li key={f} className="border-l-2 border-ledger pl-3 text-sm leading-relaxed text-ink-soft">
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="mt-auto flex flex-wrap gap-x-6 gap-y-2 pt-6 text-sm font-semibold">
+                  <Link href={`/projects/${p.slug}`} className={textLink}>
+                    Read the case study
+                  </Link>
+                  {p.github && (
+                    <a href={p.github} target="_blank" rel="noopener noreferrer" className="text-muted hover:text-ledger">
+                      Code on GitHub
+                    </a>
+                  )}
+                </div>
               </div>
+            </article>
+          ))}
+        </div>
+      </section>
 
-              <h1 className="text-4xl sm:text-6xl font-black tracking-tight leading-tight">
-                Hi, I'm <span className="text-cyan-500">Abdulrahman</span>
-              </h1>
+      {/* Skills */}
+      <section aria-labelledby="skills" className="border-t border-rule">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+          <SectionHeading
+            id="skills"
+            title="Two sides of the same ledger"
+            intro="The accounting work I do every day, and the data tools I use to analyse it."
+          />
+          <SkillsTrialBalance />
+          <Link href="/skills" className={`mt-10 inline-block ${textLink}`}>
+            Skills, certifications and training in full
+          </Link>
+        </div>
+      </section>
 
-              <p className={`text-sm sm:text-base leading-relaxed font-semibold max-w-2xl ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
-                Experienced Senior General Accountant with +7 years in financial reporting and general ledger operations, bridging accounting principles with modern data analytics tools (Python, SQL, Power BI) to extract actionable business insights.
-              </p>
+      {/* Experience */}
+      <section aria-labelledby="experience" className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+        <SectionHeading id="experience" title="Experience" />
+        <CareerWaterfall />
+        <Link href="/about" className={`mt-8 inline-block ${textLink}`}>
+          Full background and education
+        </Link>
+      </section>
 
-              <div className="pt-2 flex flex-wrap items-center justify-center md:justify-start gap-4">
-                <Link 
-                  href="/about" 
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/25 transition hover:scale-105 cursor-pointer"
-                >
-                  <User className="w-4 h-4" />
-                  <span>ABOUT ME</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-
-                <a 
-                  href="/Abdulrahman_Mohamed_CV.pdf" 
-                  download 
-                  className={`inline-flex items-center gap-2 px-6 py-3.5 rounded-xl font-bold text-xs transition border cursor-pointer ${
-                    isDark 
-                      ? 'bg-slate-800 hover:bg-slate-700 text-cyan-300 border-cyan-500/40 shadow-lg shadow-cyan-950/50' 
-                      : 'bg-slate-200 hover:bg-slate-300 text-slate-900 border-slate-300'
-                  }`}
-                >
-                  <FileText className="w-4 h-4 text-cyan-400" />
-                  <span>Resume PDF</span>
+      {/* Contact */}
+      <section aria-labelledby="contact" className="bg-ink text-paper">
+        <div className="mx-auto grid max-w-6xl gap-12 px-5 py-20 sm:px-8 lg:grid-cols-[1fr_1.3fr] lg:gap-16">
+          <div>
+            <h2 id="contact" className="font-serif text-3xl font-semibold tracking-tight sm:text-4xl">
+              Let&rsquo;s talk
+            </h2>
+            <p className="mt-3 max-w-md text-lg leading-relaxed text-paper/75">
+              I&rsquo;m open to senior accounting, financial analysis and BI roles, and to freelance analysis projects.
+            </p>
+            <ul className="mt-8 space-y-4 text-base">
+              <li>
+                <a href={`mailto:${profile.email}`} className="inline-flex items-center gap-3 break-all hover:underline">
+                  <Mail className="h-5 w-5 shrink-0 text-paper/60" aria-hidden /> {profile.email}
                 </a>
-              </div>
-            </div>
-
-            <div className="relative md:w-5/12 h-72 md:h-[380px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
-              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-sky-500 blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
-              <img 
-                src="/hero section.png" 
-                alt="Abdulrahman Mohamed Hero" 
-                className="relative z-10 w-full h-full object-cover rounded-2xl group-hover:scale-105 transition duration-500"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logo.svg';
-                  (e.target as HTMLImageElement).className = 'relative z-10 w-3/4 h-3/4 object-contain';
-                }}
-              />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== DIVIDER 1: Data Quote & Image 1 ==================== */}
-        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
-          <motion.div 
-            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
-              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="md:w-1/2 space-y-6 text-center md:text-left">
-              <div className="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center mx-auto md:mx-0 text-cyan-400">
-                <Quote className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
-                "The world is full of obvious data which nobody has ever observed."
-              </h3>
-              <p className="text-xs sm:text-sm font-semibold text-cyan-500 uppercase tracking-wider">
-                — Sherlock Holmes • Big Data & Hidden Insights
-              </p>
-            </div>
-
-            <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-cyan-500/30 shadow-xl relative group">
-              <img 
-                src="/download1.png" 
-                alt="Data Visualization 1" 
-                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-              />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== SECTION 2: SKILLS ==================== */}
-        <section id="skills-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
-          <motion.div 
-            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
-              isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="relative md:w-5/12 h-64 md:h-[350px] w-full rounded-3xl overflow-hidden shadow-2xl border border-cyan-500/30 flex-shrink-0 group">
-              <img 
-                src="/workspace.jpg" 
-                alt="Abdulrahman Workspace & Skills" 
-                className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-500"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
-                }}
-              />
-              <div className={`absolute inset-0 bg-gradient-to-t ${
-                isDark ? 'from-slate-900/80 via-transparent to-transparent' : 'from-white/50 via-transparent to-transparent'
-              }`} />
-            </div>
-
-            <div className="space-y-6 text-center md:text-left flex-1">
-              <span className="text-xs font-bold text-cyan-500 uppercase tracking-widest">TECHNICAL & FINANCIAL SKILLS</span>
-              <h2 className="text-3xl sm:text-5xl font-black">Core Capabilities</h2>
-              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                Combining precision in General Ledger & Financial Statements with Python & Power BI to transform raw transactions into automated KPI dashboards.
-              </p>
-
-              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 pb-2">
-                <div className="flex items-center gap-2 text-emerald-400 bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
-                  <Calculator className="w-5 h-5" />
-                  <span>Financial GL & Costing</span>
-                </div>
-                <div className="flex items-center gap-2 text-cyan-400 bg-cyan-950/30 p-3 rounded-xl border border-cyan-900/50">
-                  <BarChart3 className="w-5 h-5" />
-                  <span>Python & SQL Analytics</span>
-                </div>
-              </div>
-
-              <div>
-                <Link 
-                  href="/skills" 
-                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-slate-900 text-cyan-400 dark:bg-slate-800 dark:hover:bg-slate-700 font-bold text-xs transition hover:scale-105 border border-cyan-500/30 cursor-pointer"
-                >
-                  <BarChart3 className="w-4 h-4" />
-                  <span>EXPLORE ALL SKILLS</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== DIVIDER 2: Analytics Quote & Image 2 ==================== */}
-        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
-          <motion.div 
-            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row-reverse items-center gap-10 ${
-              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="md:w-1/2 space-y-6 text-center md:text-left">
-              <div className="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/30 flex items-center justify-center mx-auto md:mx-0 text-sky-400">
-                <BarChart3 className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
-                "Data is like crude oil. It’s valuable, but if unrefined it cannot really be used."
-              </h3>
-              <p className="text-xs sm:text-sm font-semibold text-sky-400 uppercase tracking-wider">
-                — Clive Humby • Refining Clean Insights
-              </p>
-            </div>
-
-            <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-sky-500/30 shadow-xl relative group">
-              <img 
-                src="/download2.png" 
-                alt="Data Visualization 2" 
-                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-              />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== SECTION 3: PROJECTS ==================== */}
-        <section id="projects-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
-          <motion.div 
-            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
-              isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="space-y-6 text-center md:text-left flex-1">
-              <span className="text-xs font-bold text-cyan-500 uppercase tracking-widest flex items-center justify-center md:justify-start gap-2">
-                <FolderKanban className="w-4 h-4" />
-                <span>FEATURED CASE STUDIES & DASHBOARDS</span>
-              </span>
-              
-              <h2 className="text-3xl sm:text-5xl font-black">Data-Driven Projects</h2>
-              
-              <p className={`text-sm sm:text-base leading-relaxed ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                Explore hands-on data analytics and financial modeling projects utilizing Python, Pandas, SQL Server, and interactive Power BI dashboards to drive revenue growth and customer retention.
-              </p>
-
-              <div className="grid grid-cols-2 gap-4 text-xs font-bold text-slate-400 pb-2">
-                <div className="flex items-center gap-2 text-cyan-400 bg-cyan-950/30 p-3 rounded-xl border border-cyan-900/50">
-                  <PieChart className="w-5 h-5" />
-                  <span>Customer Churn EDA</span>
-                </div>
-                <div className="flex items-center gap-2 text-emerald-400 bg-emerald-950/30 p-3 rounded-xl border border-emerald-900/50">
-                  <BarChart3 className="w-5 h-5" />
-                  <span>Revenue & Sales BI</span>
-                </div>
-              </div>
-
-              <div>
-                <Link 
-                  href="/projects" 
-                  className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold text-xs shadow-lg shadow-cyan-500/25 transition hover:scale-105 cursor-pointer"
-                >
-                  <Layers className="w-4 h-4" />
-                  <span>EXPLORE ALL PROJECTS</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            <div className="relative md:w-5/12 h-72 md:h-[350px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-cyan-400/50 flex items-center justify-center bg-slate-950 flex-shrink-0 group p-1">
-              <div className="absolute -inset-2 bg-gradient-to-r from-cyan-400 to-sky-500 blur-xl opacity-30 group-hover:opacity-60 transition duration-500" />
-              <img 
-                src="/Firefly_Gemini Flash_data analysis  886741.png" 
-                alt="Data Analytics & Dashboard Projects" 
-                className="relative z-10 w-full h-full object-cover rounded-2xl group-hover:scale-105 transition duration-500"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).src = '/logo.svg';
-                  (e.target as HTMLImageElement).className = 'relative z-10 w-3/4 h-3/4 object-contain';
-                }}
-              />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== DIVIDER 3: Future Quote & Image 3 ==================== */}
-        <section className="w-full h-screen flex items-center justify-center px-6 snap-start">
-          <motion.div 
-            className={`w-full max-w-6xl p-8 md:p-12 rounded-3xl border shadow-2xl flex flex-col md:flex-row items-center gap-10 ${
-              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="md:w-1/2 space-y-6 text-center md:text-left">
-              <div className="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto md:mx-0 text-emerald-400">
-                <Sparkles className="w-7 h-7" />
-              </div>
-              <h3 className="text-2xl sm:text-3xl font-black tracking-wide leading-snug">
-                "The goal is to turn data into information, and information into insight."
-              </h3>
-              <p className="text-xs sm:text-sm font-semibold text-emerald-400 uppercase tracking-wider">
-                — Carly Fiorina • Strategic Decision Making
-              </p>
-            </div>
-
-            <div className="md:w-1/2 h-64 sm:h-80 w-full rounded-2xl overflow-hidden border border-emerald-500/30 shadow-xl relative group">
-              <img 
-                src="/download3.png" 
-                alt="Data Visualization 3" 
-                className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-              />
-            </div>
-          </motion.div>
-        </section>
-
-        {/* ==================== SECTION 4: CONTACT ==================== */}
-        <section id="contact-card" className="w-full h-screen flex items-center justify-center px-6 snap-start pt-20">
-          <motion.div 
-            className={`w-full max-w-6xl p-10 md:p-14 rounded-3xl border transition-all duration-300 flex flex-col md:flex-row items-center gap-12 ${
-              isDark ? 'bg-slate-900/90 border-slate-800 shadow-2xl' : 'bg-white border-slate-200 shadow-xl'
-            }`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: false, amount: 0.5 }}
-            variants={sectionVariants}
-          >
-            <div className="space-y-6 text-center md:text-left flex-1">
-              <div className="w-24 h-24 rounded-2xl bg-slate-950 border-2 border-cyan-400/80 overflow-hidden mx-auto md:mx-0 shadow-lg p-3 flex items-center justify-center">
-                <img 
-                  src="/logo.svg" 
-                  alt="Abdulrahman Logo" 
-                  className="w-full h-full object-contain"
-                />
-              </div>
-
-              <h2 className="text-3xl sm:text-5xl font-black">Let's Connect</h2>
-              <p className={`text-sm sm:text-base ${isDark ? 'text-slate-300' : 'text-slate-600'}`}>
-                Available for Senior Accounting, Financial Data Analytics, and BI Opportunities.
-              </p>
-
-              <div className="space-y-3 text-xs sm:text-sm font-semibold pt-2">
-                <div className="flex items-center justify-center md:justify-start gap-3 text-cyan-500">
-                  <Mail className="w-5 h-5" />
-                  <span>abdulrahmanmohamed306@gmail.com</span>
-                </div>
-                <div className="flex items-center justify-center md:justify-start gap-3 text-emerald-500">
-                  <Phone className="w-5 h-5" />
-                  <span>+20 111 649 5454</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="w-full md:w-1/2 p-6 rounded-2xl bg-slate-950 border border-slate-800 text-slate-100 space-y-4 shadow-xl">
-              <h3 className="font-bold text-base text-cyan-400 flex items-center gap-2">
-                <Send className="w-5 h-5" />
-                <span>Send Direct Message</span>
-              </h3>
-
-              {emailSent ? (
-                <div className="p-4 rounded-xl bg-emerald-500/20 text-emerald-400 text-xs font-bold text-center">
-                  Thank you! Your message has been sent successfully.
-                </div>
-              ) : (
-                <form onSubmit={handleSendEmail} className="space-y-3 text-xs">
-                  <input 
-                    type="text" 
-                    placeholder="Your Name" 
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
-                  />
-                  <input 
-                    type="email" 
-                    placeholder="Your Email" 
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
-                  />
-                  <textarea 
-                    placeholder="Your Message..." 
-                    rows={3} 
-                    required
-                    value={formData.message}
-                    onChange={(e) => setFormData({...formData, message: e.target.value})}
-                    className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-400"
-                  />
-                  <button 
-                    type="submit" 
-                    className="w-full py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-extrabold transition flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/20 cursor-pointer"
-                  >
-                    <span>Send Message</span>
-                    <Send className="w-4 h-4" />
-                  </button>
-                </form>
-              )}
-            </div>
-          </motion.div>
-        </section>
-
-      </main>
-    </div>
+              </li>
+              <li>
+                <a href={profile.phoneHref} className="figure inline-flex items-center gap-3 hover:underline">
+                  <Phone className="h-5 w-5 shrink-0 text-paper/60" aria-hidden /> {profile.phone}
+                </a>
+              </li>
+              <li>
+                <a href={profile.whatsapp} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-3 hover:underline">
+                  <MessageCircle className="h-5 w-5 shrink-0 text-paper/60" aria-hidden /> Message on WhatsApp
+                </a>
+              </li>
+            </ul>
+            <p className="mt-8 flex gap-6 text-sm">
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-bar">
+                LinkedIn
+              </a>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-bar">
+                GitHub
+              </a>
+              <a href={profile.cv} download className="underline underline-offset-4 hover:text-bar">
+                Download CV
+              </a>
+            </p>
+          </div>
+          <div className="bg-paper p-6 text-ink sm:p-8">
+            <ContactForm />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

@@ -1,193 +1,95 @@
-'use client';
+import type { Metadata } from "next";
+import Link from "next/link";
+import { skillGroups, certifications, projects } from "@/lib/site";
+import { PageIntro } from "@/components/page-intro";
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { ArrowLeft, Calculator, BarChart3, Globe, CheckCircle2, Moon, Sun, Star } from 'lucide-react';
+export const metadata: Metadata = {
+  title: "Skills",
+  description: "Accounting, finance and data analysis skills of Abdulrahman Mohamed.",
+};
+
+const methods = [
+  "Exploratory data analysis",
+  "Data cleaning and preprocessing pipelines",
+  "Statistical correlation analysis",
+  "Feature engineering",
+  "Financial data modelling",
+  "Automated KPI summaries",
+];
 
 export default function SkillsPage() {
-  // تم ضبط القيمة الافتراضية هنا لتكون true (الوضع الغامق هو الأساس)
-  const [isDark, setIsDark] = useState(true);
-
-  const skillsData = [
-    {
-      category: "Data Analytics & Business Intelligence",
-      icon: <BarChart3 className="w-5 h-5 text-cyan-500" />,
-      skills: [
-        { 
-          name: "Python (Pandas, NumPy, Seaborn)", 
-          rating: 4, 
-          percentage: "85%", 
-          comment: "Leveraging Python libraries for automated data cleaning, exploratory data analysis, and financial performance modeling." 
-        },
-        { 
-          name: "SQL Server", 
-          rating: 4, 
-          percentage: "85%", 
-          comment: "Writing advanced queries, joins, and aggregations to extract deep financial and business intelligence insights from relational databases." 
-        },
-        { 
-          name: "Power BI & Tableau", 
-          rating: 4, 
-          percentage: "80%", 
-          comment: "Designing interactive visual dashboards to track key performance indicators (KPIs) and operational metrics." 
-        },
-        { 
-          name: "Advanced Excel", 
-          rating: 5, 
-          percentage: "95%", 
-          comment: "Expert in Power Query, Pivot Tables, complex formulas, and financial modeling for corporate data structuring." 
-        }
-      ]
-    },
-    {
-      category: "Financial Accounting & Reporting",
-      icon: <Calculator className="w-5 h-5 text-emerald-500" />,
-      skills: [
-        { 
-          name: "Financial Statements Preparation", 
-          rating: 5, 
-          percentage: "95%", 
-          comment: "Extensive expertise in preparing Income Statement, Balance Sheet, and Cash Flow statements in compliance with standards." 
-        },
-        { 
-          name: "General Ledger & Reconciliations", 
-          rating: 4.5, 
-          percentage: "90%", 
-          comment: "Managing general ledger operations accurately and handling regular bank reconciliations and period-end closings." 
-        },
-        { 
-          name: "Accounts Payable & Receivable", 
-          rating: 4.5, 
-          percentage: "90%", 
-          comment: "Managing full-cycle AP/AR operations, monitoring collections, and tracking vendor payments efficiently." 
-        },
-        { 
-          name: "Financial Auditing & Internal Control", 
-          rating: 4, 
-          percentage: "85%", 
-          comment: "Executing financial audits, strengthening internal controls, and ensuring accuracy across financial transactions." 
-        }
-      ]
-    },
-    {
-      category: "Core Competencies & Tools",
-      icon: <Globe className="w-5 h-5 text-amber-500" />,
-      skills: [
-        { 
-          name: "Exploratory Data Analysis (EDA)", 
-          rating: 4.5, 
-          percentage: "90%", 
-          comment: "Investigating dataset characteristics, identifying anomalies, and uncovering commercial patterns to support decision-making." 
-        },
-        { 
-          name: "Financial Modeling", 
-          rating: 4.5, 
-          percentage: "88%", 
-          comment: "Building structural quantitative models to forecast business revenues, expenditures, and corporate growth." 
-        },
-        { 
-          name: "Git & GitHub", 
-          rating: 4, 
-          percentage: "85%", 
-          comment: "Version control management, repository documentation, and collaborative code deployment." 
-        }
-      ]
-    }
-  ];
-
   return (
-    <div className={`min-h-screen font-sans p-6 md:p-12 transition-colors duration-300 ${
-      isDark ? 'bg-[#0b0f19] text-slate-200' : 'bg-[#fafafa] text-slate-800'
-    }`}>
-      <div className="max-w-4xl mx-auto space-y-8">
-        
-        {/* Header with Back Button and Theme Toggle */}
-        <div className="flex items-center justify-between">
-          <Link 
-            href="/" 
-            className={`inline-flex items-center gap-2 text-xs font-bold px-4 py-2 rounded-xl transition cursor-pointer ${
-              isDark ? 'bg-slate-800 text-cyan-400 hover:bg-slate-700' : 'bg-slate-200 text-slate-900 hover:bg-slate-300'
-            }`}
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </Link>
+    <>
+      <PageIntro
+        title="Skills"
+        intro="Seven years of hands-on accounting, backed by formal training in data analysis. Every tool listed here is one I have used on real ledgers or in the projects on this site."
+        back={{ href: "/", label: "Home" }}
+      />
 
-          <button 
-            onClick={() => setIsDark(!isDark)}
-            className="p-2.5 rounded-full bg-slate-800 text-amber-400 hover:bg-slate-700 transition shadow-md cursor-pointer"
-            title="Toggle Theme"
-          >
-            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-700" />}
-          </button>
-        </div>
-
-        {/* Page Title */}
-        <div className="space-y-2 border-l-4 border-cyan-400 pl-4">
-          <h1 className="text-3xl font-extrabold tracking-tight">Technical & Financial Skills</h1>
-          <p className="text-sm text-slate-400">
-            A comprehensive breakdown of data analytics tools, accounting proficiencies, and core competencies.
-          </p>
-        </div>
-
-        {/* Skills List with Hover Effect */}
-        <div className="space-y-8">
-          {skillsData.map((section, idx) => (
-            <div key={idx} className={`p-6 rounded-2xl border shadow-sm space-y-5 ${
-              isDark ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'
-            }`}>
-              <div className="flex items-center gap-3">
-                {section.icon}
-                <h2 className="text-lg font-bold">{section.category}</h2>
-              </div>
-
-              <div className="space-y-4">
-                {section.skills.map((skill, sIdx) => (
-                  <div 
-                    key={sIdx} 
-                    className={`p-4 rounded-xl border transition-all duration-300 group hover:shadow-md hover:border-cyan-400/60 ${
-                      isDark ? 'bg-slate-950/50 border-slate-800/60 hover:bg-slate-900/80' : 'bg-slate-50 border-slate-100 hover:bg-cyan-50/30'
-                    }`}
-                  >
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-cyan-500 flex-shrink-0" />
-                        <span className="font-bold text-sm">{skill.name}</span>
-                      </div>
-                      
-                      {/* Rating Stars & Percentage */}
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star 
-                              key={i} 
-                              className={`w-3.5 h-3.5 ${
-                                i < Math.floor(skill.rating) 
-                                  ? 'text-amber-400 fill-amber-400' 
-                                  : i < skill.rating 
-                                  ? 'text-amber-400 fill-amber-400/50' 
-                                  : 'text-slate-700'
-                              }`} 
-                            />
-                          ))}
-                        </div>
-                        <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400">
-                          {skill.percentage}
-                        </span>
-                      </div>
-                    </div>
-
-                    <p className="text-xs text-slate-400 pl-6 leading-relaxed">
-                      {skill.comment}
-                    </p>
+      <div className="mx-auto max-w-6xl space-y-20 px-5 py-16 sm:px-8">
+        <div className="grid gap-14 md:grid-cols-2">
+          {skillGroups.map((g) => (
+            <section key={g.title} aria-labelledby={g.title}>
+              <h2 id={g.title} className="border-b-2 border-ink pb-3 font-serif text-2xl font-semibold text-ink">
+                {g.title}
+              </h2>
+              <dl className="divide-y divide-rule">
+                {g.items.map((s) => (
+                  <div key={s.name} className="py-4">
+                    <dt className="font-semibold text-ink">{s.name}</dt>
+                    <dd className="mt-0.5 text-ink-soft">{s.note}</dd>
                   </div>
                 ))}
-              </div>
-            </div>
+              </dl>
+            </section>
           ))}
         </div>
 
+        <section aria-labelledby="methods" className="border border-rule-strong bg-sheet p-6 sm:p-10">
+          <h2 id="methods" className="font-serif text-2xl font-semibold text-ink">
+            Analysis methods
+          </h2>
+          <ul className="mt-6 grid gap-x-10 gap-y-3 sm:grid-cols-2 lg:grid-cols-3">
+            {methods.map((m) => (
+              <li key={m} className="border-l-2 border-ledger pl-3 text-ink-soft">
+                {m}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="where" className="grid gap-12 lg:grid-cols-2">
+          <div>
+            <h2 id="where" className="font-serif text-2xl font-semibold text-ink">
+              See them in use
+            </h2>
+            <ul className="mt-6 divide-y divide-rule border-y border-rule">
+              {projects.map((p) => (
+                <li key={p.slug} className="py-4">
+                  <Link href={`/projects/${p.slug}`} className="font-semibold text-ink hover:text-ledger">
+                    {p.title}
+                  </Link>
+                  <p className="text-sm text-muted">{p.tools.join(", ")}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h2 className="font-serif text-2xl font-semibold text-ink">Where I learned them</h2>
+            <ul className="mt-6 divide-y divide-rule border-y border-rule">
+              {certifications.map((c) => (
+                <li key={c.name} className="py-4">
+                  <p className="font-semibold text-ink">
+                    {c.name}
+                    {c.status && <span className="ml-2 text-xs font-medium text-ledger">({c.status})</span>}
+                  </p>
+                  <p className="text-sm text-muted">{c.issuer}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
       </div>
-    </div>
+    </>
   );
 }
