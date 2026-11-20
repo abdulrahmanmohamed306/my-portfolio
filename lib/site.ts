@@ -262,6 +262,16 @@ export const projects: Project[] = [
 
 export const experience = [
   {
+    role: "Freelance Data Analyst",
+    company: "Upwork and remote client projects",
+    period: "Present",
+    points: [
+      "Build Python data pipelines (Pandas, NumPy, Seaborn) to analyse sales performance, profitability and customer behaviour.",
+      "Design Power BI dashboards and SQL queries around each client's business requirements.",
+      "Deliver end-to-end data cleaning, variance analysis and automated KPI summaries.",
+    ],
+  },
+  {
     role: "General Accountant",
     company: "Emessa Denim for Ready Garments",
     period: "Apr 2023 – Present",
