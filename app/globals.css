@@ -73,6 +73,40 @@
   }
 }
 
+/* Hero ledger: rows post one after another, then the double rule is drawn */
+@keyframes ledger-post {
+  from {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ledger-rule {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+.ledger-anim .ledger-row {
+  animation: ledger-post 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+.ledger-anim .ledger-rule {
+  transform-origin: left;
+  animation: ledger-rule 520ms cubic-bezier(0.6, 0, 0.2, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ledger-anim .ledger-row,
+  .ledger-anim .ledger-rule {
+    animation: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

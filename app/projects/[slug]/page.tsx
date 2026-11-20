@@ -5,6 +5,7 @@ import { projects } from "@/lib/site";
 import { PageIntro } from "@/components/page-intro";
 import { ChartGallery } from "@/components/chart-gallery";
 import { ProjectDashboard } from "@/components/project-dashboard";
+import { AskTheData } from "@/components/ask-the-data";
 
 export const dynamicParams = false;
 
@@ -81,6 +82,18 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 </li>
               ))}
             </ul>
+          </section>
+        )}
+
+        {p.slug === "retail-sales-profitability" && (
+          <section aria-labelledby="ask" className="scroll-mt-24">
+            <h2 id="ask" className="font-serif text-3xl font-semibold text-ink">
+              Ask the data
+            </h2>
+            <p className="mb-8 mt-2 max-w-2xl text-muted">
+              Pick a business question to see the Python or SQL I would write to answer it, and the result it returns on this dataset.
+            </p>
+            <AskTheData />
           </section>
         )}
 

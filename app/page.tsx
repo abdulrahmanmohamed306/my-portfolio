@@ -1,42 +1,13 @@
 import Link from "next/link";
 import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
-import { profile, ledger, projects, experience, skillGroups } from "@/lib/site";
+import { profile, projects } from "@/lib/site";
+import { LedgerStatement } from "@/components/ledger-statement";
+import { InteractiveDashboard } from "@/components/interactive-dashboard";
+import { SkillsTrialBalance } from "@/components/skills-trial-balance";
+import { CareerWaterfall } from "@/components/career-waterfall";
 import { SectionHeading } from "@/components/section-heading";
 import { ContactForm } from "@/components/contact-form";
 import { ProjectDashboard } from "@/components/project-dashboard";
-
-function LedgerStatement() {
-  return (
-    <figure className="border border-rule-strong bg-sheet shadow-[0_1px_0_var(--color-rule)]">
-      <figcaption className="flex items-baseline justify-between border-b border-rule-strong px-5 py-3">
-        <span className="font-serif text-lg text-ink">Statement of experience</span>
-        <span className="text-xs text-muted">2017 – 2026</span>
-      </figcaption>
-      <table className="w-full text-sm">
-        <tbody>
-          {ledger.map((row, i) => (
-            <tr key={row.label} className={i % 2 === 0 ? "bg-bar" : ""}>
-              <th scope="row" className="px-5 py-3 text-left font-normal text-ink-soft">
-                {row.label}
-              </th>
-              <td className="figure px-5 py-3 text-right font-serif text-xl font-semibold text-ink">{row.value}</td>
-            </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr>
-            <th scope="row" className="px-5 pb-4 pt-4 text-left font-semibold text-ink">
-              Open to
-            </th>
-            <td className="px-5 pb-4 pt-4 text-right">
-              <span className="double-rule whitespace-nowrap pb-0.5 font-semibold text-ledger">Finance &amp; BI roles</span>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
-    </figure>
-  );
-}
 
 const textLink =
   "text-sm font-semibold text-ink underline decoration-rule-strong underline-offset-4 hover:text-ledger hover:decoration-ledger";
@@ -96,6 +67,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Interactive dashboard */}
+      <section aria-labelledby="explore" className="border-b border-rule bg-sheet">
+        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+          <SectionHeading
+            id="explore"
+            title="Don't take my word for it. Explore the data."
+            intro="This is the real data from my retail sales project: 1,007 order lines from 2014 to 2017. Filter it the way a finance manager would and watch the figures recalculate."
+          />
+          <InteractiveDashboard />
+          <p className="mt-5 text-sm text-muted">
+            Want to see the code behind the numbers?{" "}
+            <Link href="/projects/retail-sales-profitability#ask" className={textLink}>
+              Ask the data a question
+            </Link>
+          </p>
+        </div>
+      </section>
+
       {/* Projects */}
       <section aria-labelledby="projects" className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
         <SectionHeading
@@ -143,28 +132,14 @@ export default function HomePage() {
       </section>
 
       {/* Skills */}
-      <section aria-labelledby="skills" className="border-y border-rule bg-sheet">
+      <section aria-labelledby="skills" className="border-t border-rule">
         <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
           <SectionHeading
             id="skills"
             title="Two sides of the same ledger"
             intro="The accounting work I do every day, and the data tools I use to analyse it."
           />
-          <div className="grid gap-12 md:grid-cols-2">
-            {skillGroups.map((g) => (
-              <div key={g.title}>
-                <h3 className="border-b-2 border-ink pb-2 font-serif text-xl font-semibold text-ink">{g.title}</h3>
-                <ul className="divide-y divide-rule">
-                  {g.items.map((s) => (
-                    <li key={s.name} className="py-3">
-                      <p className="font-medium text-ink">{s.name}</p>
-                      <p className="text-sm text-muted">{s.note}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+          <SkillsTrialBalance />
           <Link href="/skills" className={`mt-10 inline-block ${textLink}`}>
             Skills, certifications and training in full
           </Link>
@@ -174,17 +149,7 @@ export default function HomePage() {
       {/* Experience */}
       <section aria-labelledby="experience" className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
         <SectionHeading id="experience" title="Experience" />
-        <ol className="border-t border-ink">
-          {experience.map((job) => (
-            <li key={job.role + job.period} className="grid gap-1 border-b border-rule py-5 sm:grid-cols-[12rem_1fr] sm:gap-8">
-              <p className="figure text-sm text-muted sm:pt-1">{job.period}</p>
-              <div>
-                <p className="font-serif text-lg font-semibold text-ink">{job.role}</p>
-                <p className="text-sm text-ink-soft">{job.company}</p>
-              </div>
-            </li>
-          ))}
-        </ol>
+        <CareerWaterfall />
         <Link href="/about" className={`mt-8 inline-block ${textLink}`}>
           Full background and education
         </Link>

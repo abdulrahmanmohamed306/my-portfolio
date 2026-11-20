@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { profile, experience, education, certifications, languages } from "@/lib/site";
 import { PageIntro } from "@/components/page-intro";
+import { CareerWaterfall } from "@/components/career-waterfall";
 
 export const metadata: Metadata = {
   title: "About",
@@ -51,7 +52,10 @@ export default function AboutPage() {
           <h2 id="experience" className="font-serif text-3xl font-semibold text-ink">
             Experience
           </h2>
-          <ol className="mt-8 border-t border-ink">
+          <div className="mt-8">
+            <CareerWaterfall />
+          </div>
+          <ol className="mt-12 border-t border-ink">
             {experience.map((job) => (
               <li key={job.role + job.period} className="grid gap-2 border-b border-rule py-7 md:grid-cols-[13rem_1fr] md:gap-10">
                 <p className="figure text-sm text-muted md:pt-1">{job.period}</p>

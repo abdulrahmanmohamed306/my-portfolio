@@ -260,11 +260,24 @@ export const projects: Project[] = [
   },
 ];
 
-export const experience = [
+export type Job = {
+  role: string;
+  company: string;
+  period: string;
+  points: string[];
+  start?: string; // YYYY-MM
+  end?: string; // YYYY-MM, empty means present
+  short?: string;
+  field?: "operations";
+  concurrent?: boolean;
+};
+
+export const experience: Job[] = [
   {
     role: "Freelance Data Analyst",
     company: "Upwork and remote client projects",
     period: "Present",
+    concurrent: true,
     points: [
       "Build Python data pipelines (Pandas, NumPy, Seaborn) to analyse sales performance, profitability and customer behaviour.",
       "Design Power BI dashboards and SQL queries around each client's business requirements.",
@@ -275,6 +288,8 @@ export const experience = [
     role: "General Accountant",
     company: "Emessa Denim for Ready Garments",
     period: "Apr 2023 – Present",
+    start: "2023-04",
+    short: "General Accountant, Emessa",
     points: [
       "Analyse journal entries and general ledger balances for a 100% accurate month-end close.",
       "Prepare and reconcile AR and AP reports, with variance analysis to speed up collections.",
@@ -285,6 +300,9 @@ export const experience = [
     role: "Banking & Treasury Accountant",
     company: "Emessa Denim for Ready Garments",
     period: "Nov 2022 – Apr 2023",
+    start: "2022-11",
+    end: "2023-04",
+    short: "Banking & Treasury",
     points: [
       "Tracked daily banking and liquidity through weekly cash-flow reports.",
       "Managed letters of credit and guarantee documentation in the ERP.",
@@ -294,6 +312,9 @@ export const experience = [
     role: "Invoicing Specialist",
     company: "Emessa Denim for Ready Garments",
     period: "Jun 2022 – Nov 2022",
+    start: "2022-06",
+    end: "2022-11",
+    short: "Invoicing Specialist",
     points: [
       "Validated VAT and charges on local and export invoices.",
       "Uploaded invoice data to the Egyptian E-Invoicing portal with full compliance.",
@@ -303,6 +324,9 @@ export const experience = [
     role: "General Accountant",
     company: "Elamsrya4kitchen Company",
     period: "May 2019 – Jun 2022",
+    start: "2019-05",
+    end: "2022-06",
+    short: "General Accountant, Elamsrya",
     points: [
       "Kept the central accounting records and ledgers for over 3 years.",
       "Took part in monthly inventory analysis, financial reporting and payroll analysis.",
@@ -312,6 +336,10 @@ export const experience = [
     role: "Branch Manager",
     company: "AMS Company",
     period: "Jan 2017 – Jun 2018",
+    start: "2017-01",
+    end: "2018-06",
+    short: "Branch Manager, AMS",
+    field: "operations",
     points: ["Ran branch operations, daily inventory and sales tracking in Retail Pro."],
   },
 ];
