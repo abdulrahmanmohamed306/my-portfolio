@@ -3,6 +3,7 @@ import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
 import { profile, projects } from "@/lib/site";
 import { LedgerStatement } from "@/components/ledger-statement";
 import { LedgerRuler } from "@/components/ledger-ruler";
+import { DriftingLines } from "@/components/drifting-lines";
 import { InteractiveDashboard } from "@/components/interactive-dashboard";
 import { SkillsTrialBalance } from "@/components/skills-trial-balance";
 import { CareerWaterfall } from "@/components/career-waterfall";
@@ -70,8 +71,9 @@ export default function HomePage() {
       </section>
 
       {/* Interactive dashboard */}
-      <section aria-labelledby="explore" className="border-b border-rule bg-sheet">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8">
+      <section aria-labelledby="explore" className="relative overflow-hidden border-b border-rule bg-sheet">
+        <DriftingLines />
+        <div className="relative z-10 mx-auto max-w-6xl px-5 py-20 sm:px-8">
           <SectionHeading
             id="explore"
             title="Don't take my word for it. Explore the data."
