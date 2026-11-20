@@ -20,7 +20,7 @@ export default function HomePage() {
       {/* Hero */}
       <section className="ruled relative border-b border-rule">
         <LedgerRuler />
-        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16 md:pb-14">
           <div>
             <p className="text-sm leading-relaxed text-muted">
               <span className="font-semibold text-ink">{profile.fullName}</span>
@@ -58,7 +58,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto lg:max-w-[26rem] xl:pb-28">
+          <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto lg:max-w-[26rem]">
             <figure className="relative">
               <img
                 src="/portrait.jpg"
@@ -69,10 +69,11 @@ export default function HomePage() {
               />
               <span aria-hidden className="absolute -right-3 -top-3 -z-10 h-full w-full border border-ledger/40" />
             </figure>
-            <div className="relative -mt-16 ml-4 mr-4 sm:ml-10 xl:absolute xl:-left-24 xl:bottom-0 xl:m-0 xl:w-[21rem]">
-              <LedgerStatement />
-            </div>
           </div>
+        </div>
+
+        <div className="relative z-10 mx-auto max-w-6xl px-5 pb-14 sm:px-8 md:pb-20">
+          <LedgerStatement />
         </div>
       </section>
 

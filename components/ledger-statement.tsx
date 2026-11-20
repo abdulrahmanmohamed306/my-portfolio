@@ -5,7 +5,7 @@ import { ledger } from "@/lib/site";
 
 // Timings (ms) shared by the CSS animation delays and the count-up
 const START = 250;
-const STEP = 260;
+const STEP = 220;
 const COUNT = 700;
 
 function split(value: string) {
@@ -35,50 +35,50 @@ function CountUp({ value, delay }: { value: string; delay: number }) {
   return <>{text}</>;
 }
 
-/** The hero's "statement": rows post one by one, figures count up, and the total gets its double rule. */
+/**
+ * The hero's "statement", laid out as one ledger line across the page:
+ * entries post one by one, figures count up, and the total gets its double rule.
+ */
 export function LedgerStatement() {
-  const footDelay = START + ledger.length * STEP + 150;
+  const footDelay = START + ledger.length * STEP + 100;
 
   return (
-    <figure className="ledger-anim border border-rule-strong bg-sheet shadow-[0_1px_0_var(--color-rule)]">
-      <figcaption className="flex items-baseline justify-between border-b border-rule-strong px-5 py-3">
-        <span className="font-serif text-lg text-ink">Statement of experience</span>
+    <figure className="ledger-anim border border-rule-strong bg-sheet">
+      <figcaption className="flex items-baseline justify-between border-b border-rule-strong px-5 py-2.5">
+        <span className="font-serif text-base text-ink sm:text-lg">Statement of experience</span>
         <span className="text-xs text-muted">2017 – 2026</span>
       </figcaption>
-      <table className="w-full text-sm">
-        <tbody>
-          {ledger.map((row, i) => {
-            const delay = START + i * STEP;
-            return (
-              <tr key={row.label} className={`ledger-row ${i % 2 === 0 ? "bg-bar" : ""}`} style={{ animationDelay: `${delay}ms` }}>
-                <th scope="row" className="px-5 py-3 text-left font-normal text-ink-soft">
-                  {row.label}
-                </th>
-                <td className="figure px-5 py-3 text-right font-serif text-xl font-semibold text-ink">
-                  <CountUp value={row.value} delay={delay} />
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-        <tfoot>
-          <tr className="ledger-row" style={{ animationDelay: `${footDelay}ms` }}>
-            <th scope="row" className="px-5 pb-4 pt-4 text-left font-semibold text-ink">
-              Open to
-            </th>
-            <td className="px-5 pb-4 pt-4 text-right">
-              <span className="relative inline-block whitespace-nowrap pb-1 font-semibold text-ledger">
-                Finance &amp; BI roles
-                <span
-                  aria-hidden
-                  className="ledger-rule absolute inset-x-0 bottom-0 h-[3px] border-y border-ink"
-                  style={{ animationDelay: `${footDelay + 250}ms` }}
-                />
-              </span>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      <dl className="grid grid-cols-2 gap-px bg-rule md:grid-cols-[repeat(4,minmax(0,1fr))_auto]">
+        {ledger.map((row, i) => {
+          const delay = START + i * STEP;
+          return (
+            <div
+              key={row.label}
+              className={`ledger-row px-5 py-4 ${i === 0 || i === 3 ? "bg-bar" : "bg-sheet"}`}
+              style={{ animationDelay: `${delay}ms` }}
+            >
+              <dt className="text-xs leading-snug text-ink-soft">{row.label}</dt>
+              <dd className="figure mt-1 font-serif text-2xl font-semibold text-ink sm:text-3xl">
+                <CountUp value={row.value} delay={delay} />
+              </dd>
+            </div>
+          );
+        })}
+        <div
+          className="ledger-row col-span-2 flex items-center justify-between gap-4 bg-sheet px-5 py-4 md:col-span-1 md:flex-col md:items-start md:justify-center"
+          style={{ animationDelay: `${footDelay}ms` }}
+        >
+          <dt className="text-xs font-semibold text-ink">Open to</dt>
+          <dd className="relative inline-block whitespace-nowrap pb-1 font-semibold text-ledger">
+            Finance &amp; BI roles
+            <span
+              aria-hidden
+              className="ledger-rule absolute inset-x-0 bottom-0 h-[3px] border-y border-ink"
+              style={{ animationDelay: `${footDelay + 250}ms` }}
+            />
+          </dd>
+        </div>
+      </dl>
     </figure>
   );
 }
