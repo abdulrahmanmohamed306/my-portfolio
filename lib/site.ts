@@ -12,7 +12,7 @@ export const profile = {
   cv: "/Abdulrahman_Mohamed_CV.pdf",
   photo: "/my.photo.jpg",
   summary:
-    "I have spent 7+ years closing the books, reconciling ledgers and managing treasury for manufacturing and retail companies. Today I pair that accounting discipline with Python, SQL and Power BI to turn financial records into reports that managers can act on.",
+    "I have spent +7 years closing the books, reconciling ledgers and managing treasury for manufacturing and retail companies. Today I pair that accounting discipline with Python, SQL and Power BI to turn financial records into reports that managers can act on.",
 };
 
 export const nav = [
@@ -24,7 +24,7 @@ export const nav = [
 
 // Shown as a ledger statement in the hero.
 export const ledger = [
-  { label: "Years in accounting & finance", value: "7+" },
+  { label: "Years in accounting & finance", value: "+7" },
   { label: "GL accuracy at month-end close", value: "100%" },
   { label: "DEPI data analysis training", value: "214 h" },
   { label: "Published analysis projects", value: "3" },

@@ -7,7 +7,7 @@ import { SiteFooter } from "@/components/site-footer";
 
 const siteTitle = "Abdulrahman Mohamed | Senior Accountant & Financial Data Analyst";
 const siteDescription =
-  "Senior General Accountant with 7+ years in financial reporting and the general ledger, using Python, SQL and Power BI to turn financial data into business insight.";
+  "Senior General Accountant with +7 years in financial reporting and the general ledger, using Python, SQL and Power BI to turn financial data into business insight.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://my-portfolio-cyan-six-hsft2er28e.vercel.app"),
