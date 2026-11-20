@@ -22,24 +22,16 @@ export default function HomePage() {
         <LedgerRuler />
         <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
           <div>
-            <div className="flex items-center gap-4">
-              <img
-                src={profile.photo}
-                alt={profile.fullName}
-                width={72}
-                height={72}
-                className="h-16 w-16 rounded-full border border-rule-strong object-cover sm:h-[72px] sm:w-[72px]"
-              />
-              <p className="text-sm leading-snug text-muted">
-                {profile.role}
-                <br />
-                <span className="inline-flex items-center gap-1">
-                  <MapPin className="h-3.5 w-3.5" aria-hidden /> {profile.location}
-                </span>
-              </p>
-            </div>
+            <p className="text-sm leading-relaxed text-muted">
+              <span className="font-semibold text-ink">{profile.fullName}</span>
+              <br />
+              {profile.role}
+              <span className="ml-3 inline-flex items-center gap-1">
+                <MapPin className="h-3.5 w-3.5" aria-hidden /> {profile.location}
+              </span>
+            </p>
 
-            <h1 className="mt-8 font-serif text-[2.6rem] font-semibold leading-[1.08] tracking-tight text-ink sm:text-6xl">
+            <h1 className="mt-8 font-serif text-[2.6rem] font-semibold leading-[1.08] tracking-tight text-ink sm:text-6xl lg:text-[3.5rem]">
               I make the numbers add up, then make them explain themselves.
             </h1>
 
@@ -66,7 +58,21 @@ export default function HomePage() {
             </div>
           </div>
 
-          <LedgerStatement />
+          <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:ml-auto lg:max-w-[26rem] xl:pb-28">
+            <figure className="relative">
+              <img
+                src="/portrait.jpg"
+                alt={profile.fullName}
+                width={720}
+                height={900}
+                className="aspect-[4/5] w-full border border-rule-strong bg-sheet object-cover object-top"
+              />
+              <span aria-hidden className="absolute -right-3 -top-3 -z-10 h-full w-full border border-ledger/40" />
+            </figure>
+            <div className="relative -mt-16 ml-4 mr-4 sm:ml-10 xl:absolute xl:-left-24 xl:bottom-0 xl:m-0 xl:w-[21rem]">
+              <LedgerStatement />
+            </div>
+          </div>
         </div>
       </section>
 

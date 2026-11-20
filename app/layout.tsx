@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     title: siteTitle,
     description: siteDescription,
     type: "website",
-    images: [{ url: "/my.photo.jpg", width: 400, height: 400, alt: "Abdulrahman Mohamed" }],
+    images: [{ url: "/portrait.jpg", width: 720, height: 900, alt: "Abdulrahman Mohamed" }],
   },
   twitter: {
     card: "summary",
     title: siteTitle,
     description: siteDescription,
-    images: ["/my.photo.jpg"],
+    images: ["/portrait.jpg"],
   },
 };
 
