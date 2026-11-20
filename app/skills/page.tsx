@@ -79,7 +79,10 @@ export default function SkillsPage() {
             <ul className="mt-6 divide-y divide-rule border-y border-rule">
               {certifications.map((c) => (
                 <li key={c.name} className="py-4">
-                  <p className="font-semibold text-ink">{c.name}</p>
+                  <p className="font-semibold text-ink">
+                    {c.name}
+                    {c.status && <span className="ml-2 text-xs font-medium text-ledger">({c.status})</span>}
+                  </p>
                   <p className="text-sm text-muted">{c.issuer}</p>
                 </li>
               ))}

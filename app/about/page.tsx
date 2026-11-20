@@ -77,7 +77,14 @@ export default function AboutPage() {
             <ul className="mt-8 divide-y divide-rule border-y border-rule">
               {certifications.map((c) => (
                 <li key={c.name} className="py-5">
-                  <p className="font-semibold text-ink">{c.name}</p>
+                  <p className="font-semibold text-ink">
+                    {c.name}
+                    {c.status && (
+                      <span className="ml-2 inline-block border border-ledger px-1.5 py-0.5 align-middle text-xs font-medium text-ledger">
+                        {c.status}
+                      </span>
+                    )}
+                  </p>
                   <p className="text-sm text-ledger">{c.issuer}</p>
                   <p className="mt-1 text-ink-soft">{c.note}</p>
                 </li>

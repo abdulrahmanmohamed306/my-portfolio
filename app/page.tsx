@@ -71,6 +71,11 @@ export default function HomePage() {
 
             <p className="prose-measure mt-6 text-lg leading-relaxed text-ink-soft">{profile.summary}</p>
 
+            <p className="prose-measure mt-5 border-l-2 border-ledger pl-4 text-ink-soft">
+              Currently taking part in <span className="font-semibold text-ink">GCI World 2026</span>, the data science and AI
+              program of the Matsuo-Iwasawa Laboratory at the University of Tokyo.
+            </p>
+
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="#projects"

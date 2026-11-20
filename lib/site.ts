@@ -337,7 +337,13 @@ export const education = {
   year: "2016",
 };
 
-export const certifications = [
+export const certifications: { name: string; issuer: string; note: string; status?: string }[] = [
+  {
+    name: "GCI World 2026: Data Science and AI program",
+    issuer: "Matsuo-Iwasawa Laboratory, The University of Tokyo",
+    note: "A three-month program (Sep – Dec 2026) covering Python, statistics, machine learning, model evaluation and applying data in business, ending in a real-world business case.",
+    status: "In progress",
+  },
   {
     name: "Digital Egypt Pioneers Initiative: Advanced Data Analysis track",
     issuer: "Ministry of Communications and IT (DEPI)",
