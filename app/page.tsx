@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Mail, Phone, MessageCircle, MapPin } from "lucide-react";
 import { profile, projects } from "@/lib/site";
 import { LedgerStatement } from "@/components/ledger-statement";
+import { LedgerRuler } from "@/components/ledger-ruler";
 import { InteractiveDashboard } from "@/components/interactive-dashboard";
 import { SkillsTrialBalance } from "@/components/skills-trial-balance";
 import { CareerWaterfall } from "@/components/career-waterfall";
@@ -16,8 +17,9 @@ export default function HomePage() {
   return (
     <>
       {/* Hero */}
-      <section className="ruled border-b border-rule">
-        <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
+      <section className="ruled relative border-b border-rule">
+        <LedgerRuler />
+        <div className="relative z-10 mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
           <div>
             <div className="flex items-center gap-4">
               <img
