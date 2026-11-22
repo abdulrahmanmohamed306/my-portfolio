@@ -71,7 +71,7 @@ export const projects: Project[] = [
       "Four years of retail orders: which categories, regions and customer segments bring in the sales, and which bring in the profit.",
     description:
       "An analysis of 1,007 order lines from a US retailer (2014–2017). I cleaned the raw sales file, engineered profit margin and performance-category fields, and broke sales and profit down by year, category, region and customer segment.",
-    github: "https://github.com/abdulrahmanmohamed306/ecommerce-customer-retention-analysis",
+    github: "https://github.com/abdulrahmanmohamed306/retail-sales-profitability-analysis",
     tools: ["Python", "Pandas", "NumPy", "Matplotlib", "Seaborn", "Excel"],
     dashboard: {
       heading: "Retail sales and profit",
